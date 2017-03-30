@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <img src="assets/images/logoteste.jpg">
+
+  <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input #email formControlName="email" type="email" placeholder="Seu endereço de Email" 
+        [class.invalid]="!loginForm.controls.email.valid && loginForm.controls.email.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" 
+      *ngIf="!loginForm.controls.email.valid  && loginForm.controls.email.dirty">
+      <p>Por favor, entre com um email válido.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Senha</ion-label>
+      <ion-input #password formControlName="password" type="password" placeholder="Sua Senha" 
+        [class.invalid]="!loginForm.controls.password.valid && loginForm.controls.password.dirty"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" 
+      *ngIf="!loginForm.controls.password.valid  && loginForm.controls.password.dirty">
+      <p>Sua senha precisa ter mais de 6 caracteres.</p>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      Login
+    </button>
+
+  </form>
+
+    <button ion-button block clear (click)="goToSignup()">
+      Criar nova conta
+    </button>
+
+    <button ion-button block clear (click)="goToResetPassword()">
+      Esqueci minha senha
+    </button>
+
+</ion-content>

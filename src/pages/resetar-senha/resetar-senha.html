@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Recupere sua Senha
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <img src="assets/images/logoteste.jpg">
+  <form [formGroup]="resetPasswordForm" (submit)="resetPassword()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input #email formControlName="email" type="email" placeholder="Seu endereço de email" 
+        [class.invalid]="!resetPasswordForm.controls.email.valid && resetPasswordForm.controls.email.dirty">
+        </ion-input>
+    </ion-item>
+    <ion-item class="error-message" 
+      *ngIf="!resetPasswordForm.controls.email.valid  && resetPasswordForm.controls.email.dirty">
+      <p>Por favor, entre com um email válido.</p>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      Recupere sua senha
+    </button>
+
+  </form>
+
+</ion-content>

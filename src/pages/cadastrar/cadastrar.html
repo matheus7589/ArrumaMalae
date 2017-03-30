@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Crie uma conta
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <img src="assets/images/logoteste.jpg">
+  <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input #email formControlName="email" type="email" placeholder="Seu endereço de email" 
+        [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
+        </ion-input>
+    </ion-item>
+    <ion-item class="error-message" 
+      *ngIf="!signupForm.controls.email.valid  && signupForm.controls.email.dirty">
+      <p>Por favor, entre com um email válido.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Senha</ion-label>
+      <ion-input #password formControlName="password" type="password" placeholder="Sua senha" 
+        [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
+        </ion-input>
+    </ion-item>
+    <ion-item class="error-message" 
+      *ngIf="!signupForm.controls.password.valid  && signupForm.controls.password.dirty">
+      <p>Sua senha precisa ter mais de 6 caracteres.</p>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      Criar conta
+    </button>
+  </form>
+</ion-content>
