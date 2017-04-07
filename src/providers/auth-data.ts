@@ -7,7 +7,7 @@ import firebase from 'firebase';
 export class AuthData {
 
 	public fireAuth: any;
-  	public userProfile: any;
+  public userProfile: any;
 
   constructor() {
   	this.fireAuth = firebase.auth();
@@ -23,6 +23,8 @@ export class AuthData {
 
 		signupUser(email: string, password: string): firebase.Promise<any> {
 
+			// return firebase.database().ref('/userProfile').push({email, password, nome, sobrenome});
+
 		  return this.fireAuth.createUserWithEmailAndPassword(email, password)
 		    .then((newUser) => {
 		      this.userProfile.child(newUser.uid).set({email: email});
@@ -35,7 +37,7 @@ export class AuthData {
 		}
 
 		logoutUser(): firebase.Promise<any> {
-		
+
   			return this.fireAuth.signOut();
 		}
 }

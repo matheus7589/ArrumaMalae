@@ -4,6 +4,10 @@ import { MyApp } from './app.component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+// Import the AF2 Module
+import { AngularFireModule } from 'angularfire2';
+
+// import pages
 import { HomePage } from '../pages/home/home';
 import { EventCreatePage } from '../pages/event-create/event-create';
 import { EventDetailPage } from '../pages/event-detail/event-detail';
@@ -18,6 +22,13 @@ import { AuthData } from '../providers/auth-data';
 import { EventData } from '../providers/event-data';
 import { PerfilData } from '../providers/perfil-data';
 
+export const firebaseConfig = {
+  apiKey: "AIzaSyCl4hPyffeXUKAEGTngBmDveGoqeBEP9XY",
+  authDomain: "arrumamalae-1d2f1.firebaseapp.com",
+  databaseURL: "https://arrumamalae-1d2f1.firebaseio.com",
+  storageBucket: "arrumamalae-1d2f1.appspot.com",
+  messagingSenderId: "210748761099"
+};
 
 @NgModule({
   declarations: [
@@ -32,7 +43,8 @@ import { PerfilData } from '../providers/perfil-data';
     CadastrarPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -52,7 +64,7 @@ import { PerfilData } from '../providers/perfil-data';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthData,
     EventData,
-    PerfilData
+    PerfilData,
   ]
 })
 export class AppModule {}

@@ -1,3 +1,4 @@
+
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
@@ -12,23 +13,45 @@
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
 
     <ion-item>
+      <ion-label stacked>Nome</ion-label>
+      <ion-input formControlName="nome" type="text" placeholder="Seu nome"
+        [class.invalid]="!signupForm.controls.nome.valid && signupForm.controls.nome.dirty">
+        </ion-input>
+    </ion-item>
+    <ion-item class="error-message"
+      *ngIf="!signupForm.controls.nome.valid && signupForm.controls.nome.dirty">
+      <p>Por favor, entre com seu nome.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Sobrenome</ion-label>
+      <ion-input formControlName="sobrenome" type="text" placeholder="Seu Sobrenome"
+        [class.invalid]="!signupForm.controls.sobrenome.valid && signupForm.controls.sobrenome.dirty">
+        </ion-input>
+    </ion-item>
+    <ion-item class="error-message"
+      *ngIf="!signupForm.controls.sobrenome.valid && signupForm.controls.sobrenome.dirty">
+      <p>Por favor, entre com seu nome.</p>
+    </ion-item>
+
+    <ion-item>
       <ion-label stacked>Email</ion-label>
-      <ion-input #email formControlName="email" type="email" placeholder="Seu endereço de email" 
+      <ion-input #email formControlName="email" type="email" placeholder="Seu endereço de email"
         [class.invalid]="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
         </ion-input>
     </ion-item>
-    <ion-item class="error-message" 
+    <ion-item class="error-message"
       *ngIf="!signupForm.controls.email.valid  && signupForm.controls.email.dirty">
       <p>Por favor, entre com um email válido.</p>
     </ion-item>
 
     <ion-item>
       <ion-label stacked>Senha</ion-label>
-      <ion-input #password formControlName="password" type="password" placeholder="Sua senha" 
+      <ion-input #password formControlName="password" type="password" placeholder="Sua senha"
         [class.invalid]="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
         </ion-input>
     </ion-item>
-    <ion-item class="error-message" 
+    <ion-item class="error-message"
       *ngIf="!signupForm.controls.password.valid  && signupForm.controls.password.dirty">
       <p>Sua senha precisa ter mais de 6 caracteres.</p>
     </ion-item>
@@ -37,4 +60,5 @@
       Criar conta
     </button>
   </form>
+
 </ion-content>

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { 
-  NavController, 
-  LoadingController, 
+import {
+  NavController,
+  LoadingController,
   AlertController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { CadastrarPage } from '../cadastrar/cadastrar';
 import { HomePage } from '../home/home';
 import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 
 
@@ -19,17 +20,21 @@ import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
 
 export class LoginPage {
 	public loginForm;
-  loading: any
+  loading: any;
 
-  constructor(public nav: NavController, public authData: AuthData, 
-    public formBuilder: FormBuilder,public alertCtrl: AlertController, 
-    public loadingCtrl: LoadingController) {
+  nomes: FirebaseListObservable<any>;
+
+  constructor(public nav: NavController, public authData: AuthData,
+    public formBuilder: FormBuilder,public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController, fire: AngularFire) {
 
     	this.loginForm = formBuilder.group({
         email: ['', Validators.compose([Validators.required])],
-        password: ['', Validators.compose([Validators.minLength(6), 
+        password: ['', Validators.compose([Validators.minLength(6),
         Validators.required])]
       });
+
+      this.nomes = fire.database.list('/perfil');
 
     }
 
@@ -59,7 +64,7 @@ export class LoginPage {
           alert.present();
         });
       });
-      
+
       this.loading = this.loadingCtrl.create();
       this.loading.present();
     }
