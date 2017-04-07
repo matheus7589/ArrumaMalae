@@ -7,6 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { CadastrarPage } from '../cadastrar/cadastrar';
 import { HomePage } from '../home/home';
+import { PerfilPage } from '../perfil/perfil';
 import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
@@ -33,12 +34,10 @@ export class LoginPage {
         password: ['', Validators.compose([Validators.minLength(6),
         Validators.required])]
       });
-
       this.nomes = fire.database.list('/perfil');
-
     }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(fire: AngularFire) {
     console.log('ionViewDidLoad LoginPage');
   }
 
@@ -48,7 +47,7 @@ export class LoginPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
         this.loading.dismiss().then( () => {
-          this.nav.setRoot(HomePage);
+          this.nav.setRoot(PerfilPage);
         });
       }, error => {
         this.loading.dismiss().then( () => {

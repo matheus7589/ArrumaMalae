@@ -1,3 +1,61 @@
 page-perfil {
 
+  // .item-md ion-avatar img{
+  //   border: 2px solid;
+  //   position: relative;
+  //   margin: auto; // essa porra deixa no centro
+  //   height: 30% !important;
+  //   width: 30% !impo;
+  //
+  // }
+
+  ion-avatar img {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .user-title {
+    color: white;
+    font-size: large;
+    font-weight: bold;
+  }
+  .user-info{
+    color: white;
+    font-size: smaller;
+  }
+  .centered{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+  }
+
+  .header-profile{
+    height: 150px;
+  }
+
+  .bar-profile{
+    height: 200px;
+  }
+
+  .bar-profile .toolbar-background {
+
+    background-size: cover;
+    background-image: url('../assets/images/logoteste.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: black;
+    opacity: .5;
+  }
+
+  .item-bar-profile{
+    background-color: transparent;
+  }
+  .content-profile{
+    top:200px;
+    background-color: lightgrey;
+  }
+
+
+
 }
