@@ -19,7 +19,9 @@ export class PerfilPage {
   authEmail: any;
   userProfile: FirebaseListObservable<any>;
   perfis: FirebaseListObservable<any>;
-  usuario: String;
+  usuario: any;
+  teste: any;
+  vamosla: any;
 
 
   constructor(public navCtrl: NavController, public nav: NavController, public fire: AngularFire, public authData: AuthData) {
@@ -37,23 +39,27 @@ export class PerfilPage {
 
     // var app = angular.module('myApp', []);
 
-
-
     this.perfis.subscribe(snapshots => {
       // items is an array
       snapshots.forEach(snapshot => {
         if(this.authEmail == snapshot.val().email){
-          console.log('Item:', snapshot.val().nome);
-          this.usuario = snapshot.val().nome;
+          // this.vamosla = snapshot.val().nome;
+          console.log('Item:', JSON.stringify(snapshot));
+          this.usuario = JSON.stringify(snapshot);
+          // this.teste = {
+            // nome: snapshot.val().nome
+          // }
         }
       });
     });
 
+    console.log('teste: ', this.usuario);
+
+    this.teste = {
+      nome: 'Matheus'
+    }
+
   }
-
-
-
-
 
 
   ionViewDidLoad() {
