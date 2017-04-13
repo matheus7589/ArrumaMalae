@@ -46,7 +46,7 @@ export class CadastrarPage {
         nome: this.signupForm.value.nome,
         sobrenome: this.signupForm.value.sobrenome,
       });
-	    this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
+	    this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.nome, this.signupForm.value.sobrenome)
 	    .then(() => {
 	      this.loading.dismiss().then( () => {
 	        this.nav.setRoot(HomePage);

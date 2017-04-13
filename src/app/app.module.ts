@@ -16,11 +16,13 @@ import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { ResetarSenhaPage } from '../pages/resetar-senha/resetar-senha';
 import { CadastrarPage } from '../pages/cadastrar/cadastrar';
+// import {Usuario} from './models/usuario';
 
 // Import providers
 import { AuthData } from '../providers/auth-data';
 import { EventData } from '../providers/event-data';
 import { PerfilData } from '../providers/perfil-data';
+import { UserData } from '../providers/user-data';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCl4hPyffeXUKAEGTngBmDveGoqeBEP9XY",
@@ -41,6 +43,7 @@ export const firebaseConfig = {
     PerfilPage,
     ResetarSenhaPage,
     CadastrarPage
+    // Usuario
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -65,6 +68,7 @@ export const firebaseConfig = {
     AuthData,
     EventData,
     PerfilData,
+    UserData
   ]
 })
 export class AppModule {}

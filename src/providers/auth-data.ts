@@ -21,13 +21,17 @@ export class AuthData {
 
 		}
 
-		signupUser(email: string, password: string): firebase.Promise<any> {
+		signupUser(email: string, password: string, nome: string, sobrenome: string): firebase.Promise<any> {
 
 			// return firebase.database().ref('/userProfile').push({email, password, nome, sobrenome});
 
 		  return this.fireAuth.createUserWithEmailAndPassword(email, password)
 		    .then((newUser) => {
-		      this.userProfile.child(newUser.uid).set({email: email});
+		      this.userProfile.child(newUser.uid).set({
+							email: email,
+							nome: nome,
+							sobrenome: sobrenome
+						});
     		});
     	}
 

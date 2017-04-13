@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthData } from '../../providers/auth-data';
+import { UserData } from '../../providers/user-data';
 import { LoginPage } from '../../pages/login/login';
+// import { Usuario } from '../models/usuario';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import firebase from 'firebase';
 
 /*
 Generated class for the Perfil page.
@@ -16,48 +19,14 @@ Ionic pages and navigation.
 })
 
 export class PerfilPage {
-  authEmail: any;
-  userProfile: FirebaseListObservable<any>;
-  perfis: FirebaseListObservable<any>;
-  usuario: any;
-  teste: any;
-  vamosla: any;
-
+  userProfile: any;
 
   constructor(public navCtrl: NavController, public nav: NavController, public fire: AngularFire, public authData: AuthData) {
 
+    // this.userData.getPerfil();
+    // this.userProfile = this.userData.getUsuario();
 
-    this.userProfile = fire.database.list('/userProfile');
-    this.perfis = fire.database.list('/perfil', { preserveSnapshot: true });
-
-
-    this.fire.auth.subscribe(auth => {
-      //Here you get the user information
-      this.authEmail = auth.auth.email;
-      console.log(this.authEmail);
-    });
-
-    // var app = angular.module('myApp', []);
-
-    this.perfis.subscribe(snapshots => {
-      // items is an array
-      snapshots.forEach(snapshot => {
-        if(this.authEmail == snapshot.val().email){
-          // this.vamosla = snapshot.val().nome;
-          console.log('Item:', JSON.stringify(snapshot));
-          this.usuario = JSON.stringify(snapshot);
-          // this.teste = {
-            // nome: snapshot.val().nome
-          // }
-        }
-      });
-    });
-
-    console.log('teste: ', this.usuario);
-
-    this.teste = {
-      nome: 'Matheus'
-    }
+    // console.log('nome', this.userProfile.nome);
 
   }
 
