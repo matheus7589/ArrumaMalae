@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { AuthData } from '../../providers/auth-data';
 import { UserData } from '../../providers/user-data';
 import { LoginPage } from '../../pages/login/login';
-// import { Usuario } from '../models/usuario';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import firebase from 'firebase';
+import { Usuario } from '../../providers/usuario';
+import { AngularFire } from 'angularfire2';
+// import firebase from 'firebase';
 
 /*
 Generated class for the Perfil page.
@@ -19,20 +19,30 @@ Ionic pages and navigation.
 })
 
 export class PerfilPage {
-  userProfile: any;
+  userNome: any;
+  userSobrenome: any;
 
-  constructor(public navCtrl: NavController, public nav: NavController, public fire: AngularFire, public authData: AuthData) {
+  constructor(public navCtrl: NavController, public nav: NavController, public fire: AngularFire, public authData: AuthData, public userData: UserData, usuario: Usuario) {
 
-    // this.userData.getPerfil();
-    // this.userProfile = this.userData.getUsuario();
+    this.userData.getPerfil((data) => {
+      // do something here
+      this.userNome = data.getNome();
+      this.userSobrenome = data.getSobreNome();
+      console.log(data);
+    });
+    // this.userProfile = userData.atualUser;
 
-    // console.log('nome', this.userProfile.nome);
+
+
+    // var nome = this.userData.atualUser.getNome();
+
 
   }
 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PerfilPage');
+    // console.log('nome', this.userProfile.getNome());
   }
 
   logOut(){

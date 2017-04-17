@@ -12,7 +12,7 @@ export class CrudEmpresaService {
   emitirLogin = new EventEmitter<boolean>();
 
   logar(formData) {
-    //Efetua o Login com uma conta existente    
+    //Efetua o Login com uma conta existente
     if (formData.valid) {
       console.log(formData.value);
       this.af.auth.login({
@@ -123,7 +123,7 @@ export class CrudEmpresaService {
         this.emitirLogin.emit(true);
         this.resgatarDadosEmpresa();
       }
-      
+
     });
   }
 

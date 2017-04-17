@@ -31,7 +31,7 @@ export class CadastrarPage {
 	      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
 	    })
 
-      this.perfis = fire.database.list('/perfil');
+      // this.perfis = fire.database.list('/perfil');
 
 
     }
@@ -40,12 +40,6 @@ export class CadastrarPage {
 	  if (!this.signupForm.valid){
 	    console.log(this.signupForm.value);
 	  } else {
-      this.perfis.push({
-        email: this.signupForm.value.email,
-        senha: this.signupForm.value.password,
-        nome: this.signupForm.value.nome,
-        sobrenome: this.signupForm.value.sobrenome,
-      });
 	    this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.nome, this.signupForm.value.sobrenome)
 	    .then(() => {
 	      this.loading.dismiss().then( () => {

@@ -16,13 +16,14 @@ import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { ResetarSenhaPage } from '../pages/resetar-senha/resetar-senha';
 import { CadastrarPage } from '../pages/cadastrar/cadastrar';
-// import {Usuario} from './models/usuario';
+
 
 // Import providers
 import { AuthData } from '../providers/auth-data';
 import { EventData } from '../providers/event-data';
 import { PerfilData } from '../providers/perfil-data';
 import { UserData } from '../providers/user-data';
+import {Usuario} from '../providers/usuario';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCl4hPyffeXUKAEGTngBmDveGoqeBEP9XY",
@@ -68,7 +69,8 @@ export const firebaseConfig = {
     AuthData,
     EventData,
     PerfilData,
-    UserData
+    UserData,
+    Usuario
   ]
 })
 export class AppModule {}
