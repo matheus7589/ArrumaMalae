@@ -6,7 +6,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { CadastrarPage } from '../cadastrar/cadastrar';
-import { HomePage } from '../home/home';
+// import { HomePage } from '../home/home';
 import { PerfilPage } from '../perfil/perfil';
 import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
