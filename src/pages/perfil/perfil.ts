@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, NgZone, OnInit } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { Component, NgZone } from '@angular/core';
+import { NavController, Platform, ActionSheetController, LoadingController } from 'ionic-angular';
 import { AuthData } from '../../providers/auth-data';
 import { UserData } from '../../providers/user-data';
 import { LoginPage } from '../../pages/login/login';
@@ -23,24 +23,82 @@ export class PerfilPage {
   assetCollection
   userNome: any;
   userSobrenome: any;
+  public loading;
 
   constructor(public navCtrl: NavController, public nav: NavController, public fire: AngularFire, public authData: AuthData, public userData: UserData, usuario: Usuario,
     public platform: Platform,
     private http: Http,
-    private zone: NgZone) {
+    private zone: NgZone,
+    public actionSheetCtrl: ActionSheetController,
+    public loadingCtrl: LoadingController) {
 
-      this.userData.getPerfil((data) => {
-        // do something here
-        this.userNome = data.getNome();
-        this.userSobrenome = data.getSobreNome();
-        console.log(data);
+      this.loading = loadingCtrl.create({ // inicia o loading
+        content: "Aguarde..."
       });
 
-      this.carregaFoto((data) =>{
-        this.assetCollection = data;
-        console.log("URL: ", this.assetCollection);
+      this.loading.present().then(() => {
+
+        this.userData.getPerfil((data) => { // Carrega dados do usuário
+          // do something here
+          this.userNome = data.getNome();
+          this.userSobrenome = data.getSobreNome();
+          console.log(data);
+        });
+
+        this.carregaFoto((data) =>{ // Carrega foto do usuario
+          this.assetCollection = data;
+          console.log("URL: ", this.assetCollection);
+        });
+
+        this.loading.dismiss(); // tira o loadin depois de ter carregado os dados e a foto
+
       });
 
+
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    presentLoading() {
+      let loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 3000
+      });
+      loader.present();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    presentActionSheet() {
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Editar foto',
+        buttons: [
+          {
+            text: 'Tirar foto',
+            // role: 'tirarfoto',
+            icon: 'camera',
+            handler: () => {
+              console.log('tirar foto clicado');
+              this.pegaFoto(1);
+            }
+          },{
+            text: 'Carregar foto da galeria',
+            icon: 'images',
+            handler: () => {
+              console.log('Galeria foi clicado');
+              this.pegaFoto(2);
+            }
+          },{
+            text: 'Cancelar',
+            role: 'cancel',
+            icon: 'close',
+            handler: () => {
+              console.log('Cancelar clicado');
+            }
+          }
+        ]
+      });
+      actionSheet.present();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +106,7 @@ export class PerfilPage {
 
     ionViewDidLoad() {
       console.log('ionViewDidLoad PerfilPage');
+      // this.presentLoading();
       // console.log('nome', this.userProfile.getNome());
     }
 
@@ -69,10 +128,23 @@ export class PerfilPage {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    pegaFoto(){
+    pegaFoto(tipo: number){
+
       console.log(Device)
+      var imageSource;
+      if(tipo == 1){
+        imageSource = Camera.PictureSourceType.CAMERA;
+      }else if(tipo == 2){
+        imageSource = Camera.PictureSourceType.PHOTOLIBRARY;
+      }
       // let imageSource = (Device.isVirtual ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA);
-      let imageSource = Camera.PictureSourceType.PHOTOLIBRARY;
+      // imageSource = Camera.PictureSourceType.PHOTOLIBRARY;
+
+      this.loading = this.loadingCtrl.create({ // inicia o loading
+        content: "Aguarde..."
+      });
+
+
 
       Camera.getPicture({
         destinationType: Camera.DestinationType.FILE_URI,
@@ -80,34 +152,46 @@ export class PerfilPage {
         targetHeight: 640,
         correctOrientation: true
       }).then((_imagePath) => {
-        alert('Caminho do arquivo ' + _imagePath);
+        this.loading.present();
+        // alert('Caminho do arquivo ' + _imagePath);
         // converte a imagem para blob(Blobs geralmente são objetos de imagem, áudio ou outro objetos multimedia)
-        return this.transformarArqEmBlob(_imagePath);
+        return this.transformarArqEmBlob(_imagePath, tipo);
       }).then((_imageBlob) => {
-        alert('Transforou em Blob ' + _imageBlob);
+        // alert('Transforou em Blob ' + _imageBlob);
 
         // upa o blob
         return this.uploadParaFirebase(_imageBlob);
       }).then((_uploadSnapshot: any) => {
-        alert('Arquivo carregado com sucesso  ' + _uploadSnapshot.downloadURL);
+        // alert('Arquivo carregado com sucesso  ' + _uploadSnapshot.downloadURL);
 
         // armazena referencia para armazenar na base de dados
         return this.salvarParaAssetsDaBaseDeDados(_uploadSnapshot);
 
       }).then((_uploadSnapshot: any) => {
         alert('Arquivo salvo para o catálogo com sucesso');
+        this.loading.dismiss();
       }, (_error) => {
         alert('Erro ' + (_error.message || _error));
       });
+
+
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    transformarArqEmBlob(_imagePath) {
+    transformarArqEmBlob(_imagePath, tipo: number) {
+
+      var caminho;
+      if(tipo == 1){
+        caminho = '';
+      }else if(tipo == 2){
+        caminho = 'file://';
+      }
 
       // Instalar - cordova plugin add cordova-plugin-file
       return new Promise((resolve, reject) => {
-        window.resolveLocalFileSystemURL('file://' + _imagePath, (fileEntry) => { // se for imagem da biblioteca
+        window.resolveLocalFileSystemURL(caminho + _imagePath, (fileEntry) => { // se for imagem da biblioteca
           // window.resolveLocalFileSystemURL(_imagePath, (fileEntry) => {  // se for imagem tirada da camera
 
           fileEntry.file((resFile) => {

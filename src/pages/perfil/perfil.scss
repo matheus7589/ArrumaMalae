@@ -10,8 +10,10 @@ page-perfil {
   // }
 
   ion-avatar img {
-    width: 100px !important;
-    height: 100px !important;
+    width: 150px !important;
+    height: 150px !important;
+    border-style: solid;
+    border-width: 1px;
   }
 
   .user-title {
@@ -35,13 +37,13 @@ page-perfil {
   }
 
   .bar-profile{
-    height: 200px;
+    height: 230px;
   }
 
   .bar-profile .toolbar-background {
 
     background-size: cover;
-    background-image: url('../assets/images/logoteste.jpg');
+    background-image: url('../assets/images/mala3.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-color: black;

@@ -6,17 +6,25 @@ Ionic pages and navigation.
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Perfil</ion-title>
+
+    <ion-buttons start>
+      <button ion-button icon-only color="royal" (click)="logOut()">
+        <ion-icon name="md-log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+    <!-- <ion-title>Send To...</ion-title>
+    <ion-buttons end> -->
   </ion-navbar>
 
   <ion-toolbar class="bar-profile">
     <ion-item no-lines class="item-bar-profile">
       <ion-avatar>
-        <img class="button centered" src="{{assetCollection}}" (click)="pegaFoto()">
+        <img style="box-shadow: 5px 5px 5px grey;" class="button centered" src="{{assetCollection}}" (click)="presentActionSheet()">
       </ion-avatar>
-      <span class="user-title centered" > {{ userNome }} {{ userSobrenome }} </span>
-      <span class="user-info centered">Palmas. Brasil</span>
+      <span class="user-title centered" style="text-shadow: 2px 2px 4px #000000; margin-top: 10px" > {{ userNome }} {{ userSobrenome }} </span>
+      <span class="user-info centered" style="text-shadow: 2px 2px 4px #000000;">Palmas. Brasil</span>
     </ion-item>
   </ion-toolbar>
 
@@ -25,16 +33,8 @@ Ionic pages and navigation.
 
 <ion-content padding>
 
-  <ion-buttons end>
-      <button ion-button icon-only (click)="logOut()">
-      <ion-label stacked>Sair</ion-label>
-        <ion-icon name="log-out"></ion-icon>
-        </button>
-    </ion-buttons>
+  <p>Informações do usuário aqui!</p>
 
-      <!-- <ion-item>
-        {{teste.nome}}
-      </ion-item> -->
 
 
 </ion-content>
