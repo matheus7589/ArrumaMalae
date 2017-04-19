@@ -12,6 +12,8 @@ export class UserData {
       // this.usuario = new Usuario();
   }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   getPerfil(callback: (data) => void){
     var user = firebase.auth().currentUser;
     var userProfile;
