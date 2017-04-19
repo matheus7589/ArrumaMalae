@@ -1,19 +1,11 @@
 page-perfil {
 
-  // .item-md ion-avatar img{
-  //   border: 2px solid;
-  //   position: relative;
-  //   margin: auto; // essa porra deixa no centro
-  //   height: 30% !important;
-  //   width: 30% !impo;
-  //
-  // }
 
   ion-avatar img {
     width: 150px !important;
     height: 150px !important;
-    border-style: solid;
-    border-width: 1px;
+    // border-style: solid;
+    // border-width: 1px;
   }
 
   .user-title {
@@ -59,5 +51,36 @@ page-perfil {
   }
 
 
+
+  .card-background-page {
+
+    ion-card {
+      position: relative;
+      text-align: center;
+      width: 100%;
+      background-image: url('../assets/images/back11.jpg');
+      border-radius: 8%;
+      box-shadow: 5px 5px 5px grey;
+      // background-color: primary;
+    }
+
+    .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 2.0em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 52%;
+      width: 100%;
+      color: #fff;
+    }
+
+  }
 
 }
