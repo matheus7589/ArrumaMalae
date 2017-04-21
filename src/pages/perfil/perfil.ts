@@ -3,6 +3,7 @@ import { NavController, Platform, ActionSheetController, LoadingController } fro
 import { AuthData } from '../../providers/auth-data';
 import { UserData } from '../../providers/user-data';
 import { LoginPage } from '../../pages/login/login';
+import { NovaMalaPage } from '../../pages/nova-mala/nova-mala';
 import { Usuario } from '../../providers/usuario';
 import { AngularFire } from 'angularfire2';
 import { Http } from '@angular/http';
@@ -25,7 +26,7 @@ export class PerfilPage {
   userSobrenome: any;
   public loading;
 
-  constructor(public navCtrl: NavController, public nav: NavController, public fire: AngularFire, public authData: AuthData, public userData: UserData, usuario: Usuario,
+  constructor(public nav: NavController, public fire: AngularFire, public authData: AuthData, public userData: UserData, usuario: Usuario,
     public platform: Platform,
     private http: Http,
     private zone: NgZone,
@@ -172,9 +173,8 @@ export class PerfilPage {
         this.loading.dismiss();
       }, (_error) => {
         alert('Erro ' + (_error.message || _error));
+        this.loading.dismiss();
       });
-
-
 
     }
 
@@ -275,6 +275,15 @@ export class PerfilPage {
         this.nav.setRoot(LoginPage);
       });
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    adicionarMala(){
+      // alert('teste');
+      this.nav.push(NovaMalaPage);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   }
