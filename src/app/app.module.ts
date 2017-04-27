@@ -25,6 +25,7 @@ import { EventData } from '../providers/event-data';
 import { PerfilData } from '../providers/perfil-data';
 import { UserData } from '../providers/user-data';
 import {Usuario} from '../providers/usuario';
+import {FotoData} from '../providers/foto-data';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCl4hPyffeXUKAEGTngBmDveGoqeBEP9XY",
@@ -73,7 +74,8 @@ export const firebaseConfig = {
     EventData,
     PerfilData,
     UserData,
-    Usuario
+    Usuario,
+    FotoData
   ]
 })
 export class AppModule {}
