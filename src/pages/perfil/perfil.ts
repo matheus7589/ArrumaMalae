@@ -23,6 +23,7 @@ declare var window: any;
 
 export class PerfilPage {
   assetCollection
+  // userAux: any;
   userNome: any;
   userSobrenome: any;
   public loading;
@@ -42,14 +43,14 @@ export class PerfilPage {
 
       this.loading.present().then(() => {
 
-        this.userData.getPerfil((data) => { // Carrega dados do usuário
-          // do something here
-          this.userNome = data.getNome();
-          this.userSobrenome = data.getSobreNome();
-          console.log(data);
+        this.userData.getPerfil().then((data) => { // Carrega dados do usuário
+          var userAux: any = data;
+          this.userNome = userAux.getNome();
+          this.userSobrenome = userAux.getSobreNome();
+          console.log('Nome', this.userNome);
         });
 
-        this.fotoData.carregaFoto((data) =>{ // Carrega foto do usuario
+        this.fotoData.carregaFoto().then((data) =>{ // Carrega foto do usuario
           this.assetCollection = data;
           console.log("URL: ", this.assetCollection);
         });

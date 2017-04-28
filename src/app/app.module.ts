@@ -24,8 +24,9 @@ import { AuthData } from '../providers/auth-data';
 import { EventData } from '../providers/event-data';
 import { PerfilData } from '../providers/perfil-data';
 import { UserData } from '../providers/user-data';
-import {Usuario} from '../providers/usuario';
-import {FotoData} from '../providers/foto-data';
+import { Usuario } from '../providers/usuario';
+import { FotoData } from '../providers/foto-data';
+import { NovaMala } from '../providers/nova-mala';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCl4hPyffeXUKAEGTngBmDveGoqeBEP9XY",
@@ -75,7 +76,8 @@ export const firebaseConfig = {
     PerfilData,
     UserData,
     Usuario,
-    FotoData
+    FotoData,
+    NovaMala
   ]
 })
 export class AppModule {}

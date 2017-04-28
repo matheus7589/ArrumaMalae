@@ -49,7 +49,8 @@ Ionic pages and navigation.
   <ion-item>
     <ion-label>Tipo de Material</ion-label>
     <!-- <ion-select [(ngModel)]="tipo" [ngModelOptions]="{standalone: true}" interface="popover"> -->
-    <ion-select formControlName="tipo" interface="popover">
+    <ion-select formControlName="tipo" interface="popover" [class.invalid]="!novaMalaForm.controls.tipo.valid
+            && novaMalaForm.controls.tipo.dirty">
       <ion-option value="Couro">Couro</ion-option>
       <ion-option value="Plástico">Plástico</ion-option>
       <ion-option value="Madeira">Madeira</ion-option>
@@ -68,7 +69,8 @@ Ionic pages and navigation.
   <ion-item>
     <ion-label>Tamanho da Mala</ion-label>
     <!-- <ion-select [(ngModel)]="tamanho" [ngModelOptions]="{standalone: true}" interface="popover"> -->
-    <ion-select formControlName="tamanho" interface="popover">
+    <ion-select formControlName="tamanho" interface="popover" [class.invalid]="!novaMalaForm.controls.tamanho.valid
+            && novaMalaForm.controls.tamanho.dirty">
       <ion-option value="Pequena">Pequena</ion-option>
       <ion-option value="Médio">Média</ion-option>
       <ion-option value="Grande">Grande</ion-option>

@@ -26,15 +26,20 @@ export class FotoData {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  carregaFoto(callback: (data) => void) {
+  carregaFoto() {
     var result;
-    // carrega foto do firebase
-    firebase.database().ref('assets').child(firebase.auth().currentUser.uid).once('value', (_snapshot: any) => {
 
-      var element = _snapshot.val().URL;
-      result = element;
+    return new Promise((resolve, reject) => {
+      // carrega foto do firebase
+      firebase.database().ref('assets').child(firebase.auth().currentUser.uid).once('value', (_snapshot: any) => {
 
-      callback(result);
+        var element = _snapshot.val().URL;
+        result = element;
+
+        resolve(result);
+
+        // callback(result);
+      });
 
     });
   }
@@ -163,10 +168,10 @@ export class FotoData {
 
     return new Promise((resolve, reject) => {
 
-      // we will save meta data of image in database
+      // vai salvar o meta data da imagem no banco de dados
       var dataToSave = {
-        'URL': _uploadSnapshot.downloadURL, // url to access file
-        'nome': _uploadSnapshot.metadata.name, // name of the file
+        'URL': _uploadSnapshot.downloadURL, // url para acessar o arquivo
+        'nome': _uploadSnapshot.metadata.name, // nome do arquivo
         'dono': firebase.auth().currentUser.uid,
         'email': firebase.auth().currentUser.email,
         'ultimaAtualizacao': new Date().getTime(),
@@ -201,17 +206,17 @@ export class FotoData {
 
     // return new Promise((resolve, reject) => {
 
-      Camera.getPicture({
-        destinationType: Camera.DestinationType.FILE_URI,
-        sourceType: imageSource,
-        targetHeight: 640,
-        correctOrientation: true
-      }).then((_imagePath) => {
-          path = _imagePath;
-          alert('caminho' + path);
-      });
+    Camera.getPicture({
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: imageSource,
+      targetHeight: 640,
+      correctOrientation: true
+    }).then((_imagePath) => {
+      path = _imagePath;
+      alert('caminho' + path);
+    });
     // });
-    
+
   }
 
 
