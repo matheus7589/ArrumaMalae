@@ -7,10 +7,10 @@ import { NovaMalaPage } from '../../pages/nova-mala/nova-mala';
 import { FotoData } from '../../providers/foto-data';
 import { Usuario } from '../../providers/usuario';
 import { AngularFire } from 'angularfire2';
-import { Http } from '@angular/http';
-import { Camera, Device } from 'ionic-native';
+// import { Http } from '@angular/http';
+// import { Camera, Device } from 'ionic-native';
 // import firebase from 'firebase';
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 
 
 
@@ -30,7 +30,6 @@ export class PerfilPage {
 
   constructor(public nav: NavController, public fire: AngularFire, public authData: AuthData, public userData: UserData, usuario: Usuario,
     public platform: Platform,
-    private http: Http,
     private zone: NgZone,
     public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
@@ -55,13 +54,9 @@ export class PerfilPage {
           console.log("URL: ", this.assetCollection);
         });
 
-        this.loading.dismiss(); // tira o loadin depois de ter carregado os dados e a foto
+        this.loading.dismiss(); // tira o loading depois de ter carregado os dados e a foto
 
       });
-
-      this.alert = this.alertCtrl.create();
-      this.alert.setTitle('Entrou nesta merda');
-
 
     }
 
@@ -88,7 +83,9 @@ export class PerfilPage {
             handler: () => {
               console.log('tirar foto clicado');
               // this.pegaFoto(1);
-              this.fotoData.pegaFoto(1);
+              this.fotoData.pegaFoto(1).then((data) => {
+                this.assetCollection = data;
+              });
             }
           },{
             text: 'Carregar foto da galeria',
@@ -96,7 +93,10 @@ export class PerfilPage {
             handler: () => {
               console.log('Galeria foi clicado');
               // this.pegaFoto(2);
-              this.fotoData.pegaFoto(2);
+              this.fotoData.pegaFoto(2).then((data) => { // Recupara o Promise da função pega foto.
+                // alert('Caminho do arquivo ' + data);  // O promise garante que toda a função será executada antes de atribuir o valor à variável assetCollection
+                  this.assetCollection = data;
+              });
             }
           },{
             text: 'Cancelar',
@@ -112,16 +112,6 @@ export class PerfilPage {
 
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    recarregaFoto(){
-
-      this.fotoData.carregaFoto((data) =>{ // Carrega foto do usuario
-        this.assetCollection = data;
-        this.alert("URL: ", this.assetCollection);
-      });
-
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

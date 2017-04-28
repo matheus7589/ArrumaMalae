@@ -21,7 +21,7 @@ Ionic pages and navigation.
   <ion-toolbar class="bar-profile">
     <ion-item no-lines class="item-bar-profile">
       <ion-avatar>
-        <img style="box-shadow: 5px 5px 5px grey;" class="button centered" src="{{assetCollection}}" (click)="presentActionSheet()">
+        <img style="box-shadow: 5px 5px 5px grey;" class="button centered" [src]="assetCollection" (click)="presentActionSheet()">
       </ion-avatar>
       <span class="user-title centered" style="text-shadow: 2px 2px 4px #000000; margin-top: 10px" > {{ userNome }} {{ userSobrenome }} </span>
       <span class="user-info centered" style="text-shadow: 2px 2px 4px #000000;">Palmas. Brasil</span>

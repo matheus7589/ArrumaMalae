@@ -6,10 +6,10 @@ import { Camera, Device } from 'ionic-native';
 import * as firebase from 'firebase';
 
 /*
-  Generated class for the FotoData provider.
+Generated class for the FotoData provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
+See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+for more info on providers and Angular 2 DI.
 */
 
 declare var window: any;
@@ -44,6 +44,7 @@ export class FotoData {
   pegaFoto(tipo: number){
     console.log(Device)
     var imageSource;
+    // var url;
     if(tipo == 1){
       imageSource = Camera.PictureSourceType.CAMERA;
     }else if(tipo == 2){
@@ -56,35 +57,41 @@ export class FotoData {
       content: "Aguarde..."
     });
 
-    Camera.getPicture({
-      destinationType: Camera.DestinationType.FILE_URI,
-      sourceType: imageSource,
-      targetHeight: 640,
-      correctOrientation: true
-    }).then((_imagePath) => {
-      this.loading.present();
-      // alert('Caminho do arquivo ' + _imagePath);
-      // converte a imagem para blob(Blobs geralmente são objetos de imagem, áudio ou outro objetos multimedia)
-      return this.transformarArqEmBlob(_imagePath, tipo);
-    }).then((_imageBlob) => {
-      // alert('Transforou em Blob ' + _imageBlob);
 
-      // upa o blob
-      return this.uploadParaFirebase(_imageBlob);
-    }).then((_uploadSnapshot: any) => {
-      // alert('Arquivo carregado com sucesso  ' + _uploadSnapshot.downloadURL);
+    return new Promise((resolve, reject) => {
 
-      // armazena referencia para armazenar na base de dados
-      return this.salvarParaAssetsDaBaseDeDados(_uploadSnapshot);
+      Camera.getPicture({
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: imageSource,
+        targetHeight: 640,
+        correctOrientation: true
+      }).then((_imagePath) => {
+        this.loading.present();
+        // alert('Caminho do arquivo ' + _imagePath);
+        // converte a imagem para blob(Blobs geralmente são objetos de imagem, áudio ou outro objetos multimedia)
+        return this.transformarArqEmBlob(_imagePath, tipo);
+      }).then((_imageBlob) => {
+        // alert('Transforou em Blob ' + _imageBlob);
 
-    }).then((_uploadSnapshot: any) => {
-      alert('Arquivo salvo para o catálogo com sucesso');
-      this.loading.dismiss();
-    }, (_error) => {
-      alert('Erro ' + (_error.message || _error));
-      this.loading.dismiss();
+        // upa o blob
+        return this.uploadParaFirebase(_imageBlob);
+      }).then((_uploadSnapshot: any) => {
+        // alert('Arquivo carregado com sucesso  ' + _uploadSnapshot.downloadURL);
+        resolve(_uploadSnapshot.downloadURL);
+        // armazena referencia para armazenar na base de dados
+        return this.salvarParaAssetsDaBaseDeDados(_uploadSnapshot);
+
+      }).then((_uploadSnapshot: any) => {
+        alert('Arquivo salvo para o catálogo com sucesso');
+        this.loading.dismiss();
+        // return this.assetCollection;
+      }, (_error) => {
+        alert('Erro ' + (_error.message || _error));
+        this.loading.dismiss();
+        // return "erro";
+      });
+
     });
-
 
   }
 
@@ -171,12 +178,40 @@ export class FotoData {
         reject(_error);
       });
 
-      // this.carregaFoto((data) =>{
-      //   this.assetCollection = data;
-      //   console.log("URL: ", this.assetCollection);
-      // });
     });
 
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  pegaFotoMala(tipo: number){
+    console.log(Device)
+    var imageSource;
+    var path;
+    if(tipo == 1){
+      imageSource = Camera.PictureSourceType.CAMERA;
+    }else if(tipo == 2){
+      imageSource = Camera.PictureSourceType.PHOTOLIBRARY;
+    }
+
+    // this.loading = this.loadingCtrl.create({ // inicia o loading
+    //   content: "Aguarde..."
+    // });
+
+
+    // return new Promise((resolve, reject) => {
+
+      Camera.getPicture({
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: imageSource,
+        targetHeight: 640,
+        correctOrientation: true
+      }).then((_imagePath) => {
+          path = _imagePath;
+          alert('caminho' + path);
+      });
+    // });
+    
   }
 
 
