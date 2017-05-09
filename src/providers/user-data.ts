@@ -21,19 +21,17 @@ export class UserData {
       var teste;
       this.atualUser = new Usuario();
 
-
-
       if (user != null) {
         userProfile = this.fire.database.object('userProfile/' + user.uid, { preserveSnapshot: true });
         userProfile.subscribe(snapshot => {
           this.atualUser.setEmail(snapshot.val().email);
           this.atualUser.setNome(snapshot.val().nome);
           this.atualUser.setSobreNome(snapshot.val().sobrenome);
-          teste = {
-            nome: snapshot.val().nome,
-            sobrenome: snapshot.val().sobrenome,
-            email: snapshot.val().email
-          }
+          // teste = {
+          //   nome: snapshot.val().nome,
+          //   sobrenome: snapshot.val().sobrenome,
+          //   email: snapshot.val().email
+          // }
           // resolve(this.atualUser.toString());
           resolve(this.atualUser);
           console.log('email: ', this.atualUser.getEmail());

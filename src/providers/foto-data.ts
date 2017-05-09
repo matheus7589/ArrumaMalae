@@ -19,6 +19,8 @@ declare var window: any;
 export class FotoData {
   public loading;
   assetCollection;
+  path;
+  type;
 
   constructor(public http: Http, public loadingCtrl: LoadingController) {
     console.log('Hello FotoData Provider');
@@ -161,6 +163,7 @@ export class FotoData {
     });
   }
 
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   salvarParaAssetsDaBaseDeDados(_uploadSnapshot) {
@@ -192,32 +195,55 @@ export class FotoData {
   pegaFotoMala(tipo: number){
     console.log(Device)
     var imageSource;
-    var path;
+    // var path;
     if(tipo == 1){
       imageSource = Camera.PictureSourceType.CAMERA;
+      this.type = 1;
     }else if(tipo == 2){
       imageSource = Camera.PictureSourceType.PHOTOLIBRARY;
+      this.type = 2;
     }
 
-    // this.loading = this.loadingCtrl.create({ // inicia o loading
-    //   content: "Aguarde..."
-    // });
+    return new Promise((resolve, reject) => {
 
-
-    // return new Promise((resolve, reject) => {
-
-    Camera.getPicture({
-      destinationType: Camera.DestinationType.FILE_URI,
-      sourceType: imageSource,
-      targetHeight: 640,
-      correctOrientation: true
-    }).then((_imagePath) => {
-      path = _imagePath;
-      alert('caminho' + path);
+      Camera.getPicture({
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: imageSource,
+        targetHeight: 640,
+        correctOrientation: true
+      }).then((_imagePath) => {
+        this.path = _imagePath;
+        resolve(_imagePath);
+        // alert('caminho' + this.path);
+      });
     });
-    // });
 
   }
+
+  enviaFotoMala(){
+
+    this.loading = this.loadingCtrl.create({ // inicia o loading
+      content: "Aguarde..."
+    });
+
+    return new Promise((resolve, reject) => {
+
+      this.loading.present();
+      return this.transformarArqEmBlob(this.path, this.type).then((_imageBlob) => {
+        // upa o blob
+        return this.uploadParaFirebase(_imageBlob);
+      }).then((_uploadSnapshot: any) => {
+        alert('Arquivo salvo para o catálogo com sucesso');
+        this.loading.dismiss();
+
+        resolve(_uploadSnapshot.downloadURL);
+      }, (_error) => {
+        alert('Erro ' + (_error.message || _error));
+      });
+    });
+
+  }
+
 
 
 }

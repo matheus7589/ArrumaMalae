@@ -17,13 +17,14 @@ export class NovaMala {
     this.malas = firebase.database().ref('/minhasMalas');
   }
 
-  addMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string): firebase.Promise<any>{
+  addMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string, url: string): firebase.Promise<any>{
     console.log("tipo", tipo);
     return this.malas.push({
         tipo: tipo,
         tamanho: tamanho,
         cor: cor,
-        modelo: modelo
+        modelo: modelo,
+        url: url
       });
   }
 
