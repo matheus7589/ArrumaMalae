@@ -1,0 +1,92 @@
+<!--
+  Generated template for the AtualizaMala page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Atualizar Mala</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+
+  <form [formGroup]="atualizaMalaForm" (submit)="atualizarMala()" novalidate>
+
+    <ion-item class="centralizado">
+      <!-- <ion-label stacked>Carrega</ion-label> -->
+      <ion-img class="button" [src]="urlMala?.url" (click)="presentActionSheet()"></ion-img>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Modelo</ion-label>
+      <ion-input formControlName="modelo" type="text" placeholder="Modelo da Mala" [value]="urlMala.modelo"
+      [class.invalid]="!atualizaMalaForm.controls.modelo.valid && atualizaMalaForm.controls.modelo.dirty">
+    </ion-input>
+  </ion-item>
+  <ion-item class="error-message"
+  *ngIf="!atualizaMalaForm.controls.modelo.valid && atualizaMalaForm.controls.modelo.dirty">
+  <p>Por favor, entre com o modelo da bolsa.</p>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Cor</ion-label>
+    <ion-input formControlName="cor" type="text" placeholder="Cor da Mala" [value]="urlMala.cor"
+    [class.invalid]="!atualizaMalaForm.controls.cor.valid && atualizaMalaForm.controls.cor.dirty">
+  </ion-input>
+  </ion-item>
+  <ion-item class="error-message"
+  *ngIf="!atualizaMalaForm.controls.cor.valid && atualizaMalaForm.controls.cor.dirty">
+  <p>Por favor, entre com a cor da bolsa.</p>
+  </ion-item>
+
+  <ion-list>
+  <ion-item>
+    <ion-label>Tipo de Material</ion-label>
+    <!-- <ion-select [(ngModel)]="tipo" [ngModelOptions]="{standalone: true}" interface="popover"> -->
+    <ion-select formControlName="tipo" interface="popover" [class.invalid]="!atualizaMalaForm.controls.tipo.valid
+            && atualizaMalaForm.controls.tipo.dirty" [(ngModel)]="urlMala.tipo">
+      <ion-option value="Couro">Couro</ion-option>
+      <ion-option value="Plástico">Plástico</ion-option>
+      <ion-option value="Madeira">Madeira</ion-option>
+      <ion-option value="Borracha">Borracha</ion-option>
+      <ion-option value="Dark Matter">Matéria Negra</ion-option>
+      <ion-option value="Etc">Etecétera</ion-option>
+    </ion-select>
+  </ion-item>
+  </ion-list>
+  <ion-item class="error-message"
+  *ngIf="!atualizaMalaForm.controls.tipo.valid && atualizaMalaForm.controls.tipo.dirty">
+  <p>Por favor, entre com a tipo da mala.</p>
+  </ion-item>
+
+  <ion-list>
+  <ion-item>
+    <ion-label>Tamanho da Mala</ion-label>
+    <!-- <ion-select [(ngModel)]="tamanho" [ngModelOptions]="{standalone: true}" interface="popover"> -->
+    <ion-select formControlName="tamanho" interface="popover" [class.invalid]="!atualizaMalaForm.controls.tamanho.valid
+            && atualizaMalaForm.controls.tamanho.dirty" [(ngModel)]="urlMala.tamanho">
+      <ion-option value="Pequena">Pequena</ion-option>
+      <ion-option value="Médio">Média</ion-option>
+      <ion-option value="Grande">Grande</ion-option>
+      <ion-option value="Tamanho Família">Tamanho Família</ion-option>on>
+    </ion-select>
+  </ion-item>
+  </ion-list>
+  <ion-item class="error-message"
+  *ngIf="!atualizaMalaForm.controls.tamanho.valid && atualizaMalaForm.controls.tamanho.dirty">
+  <p>Por favor, entre com o tamanho da mala.</p>
+  </ion-item>
+
+
+  <button ion-button block type="submit">
+  Atualizar Mala
+  </button>
+
+  </form>
+
+</ion-content>

@@ -20,6 +20,7 @@ export class NovaMalaPage {
   public novaMalaForm;
   public urlMala;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
     public actionSheetCtrl: ActionSheetController, public fotoData: FotoData, public novaMala: NovaMala) {
 
@@ -82,7 +83,7 @@ export class NovaMalaPage {
         this.urlMala = data;
         this.novaMala.addMala(this.novaMalaForm.value.tipo, this.novaMalaForm.value.tamanho, this.novaMalaForm.value.foto,
           this.novaMalaForm.value.cor, this.novaMalaForm.value.modelo, this.urlMala).then(() => {
-            // alert('Enviou');
+
           });
         }, (_error) => {
           alert('Erro ' + (_error.message || _error));

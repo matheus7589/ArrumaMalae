@@ -1,15 +1,17 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, EventEmitter } from '@angular/core';
 import { NavController, Platform, ActionSheetController, LoadingController, AlertController } from 'ionic-angular';
 import { AuthData } from '../../providers/auth-data';
 import { UserData } from '../../providers/user-data';
 import { LoginPage } from '../../pages/login/login';
 import { NovaMalaPage } from '../../pages/nova-mala/nova-mala';
+import { AtualizaMalaPage } from '../../pages/atualiza-mala/atualiza-mala';
+import { NovaMala } from '../../providers/nova-mala';
 import { FotoData } from '../../providers/foto-data';
 import { Usuario } from '../../providers/usuario';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 // import { Http } from '@angular/http';
 // import { Camera, Device } from 'ionic-native';
-// import firebase from 'firebase';
+import firebase from 'firebase';
 // import * as firebase from 'firebase';
 
 
@@ -30,6 +32,7 @@ export class PerfilPage {
   public alert;
   minhasMalas: FirebaseListObservable<any>;
   badgeMinhasMalas = 0;
+  emitir: EventEmitter<true>;
 
   constructor(public nav: NavController, public fire: AngularFire, public authData: AuthData, public userData: UserData, usuario: Usuario,
     public platform: Platform,
@@ -37,7 +40,8 @@ export class PerfilPage {
     public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
     public fotoData: FotoData,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public novaMala: NovaMala) {
 
       this.loading = loadingCtrl.create({ // inicia o loading
         content: "Aguarde..."
@@ -49,25 +53,38 @@ export class PerfilPage {
           var userAux: any = data;
           this.userNome = userAux.getNome();
           this.userSobrenome = userAux.getSobreNome();
-          console.log('Nome', this.userNome);
+          // console.log('Nome', this.userNome);
         });
 
         this.fotoData.carregaFoto().then((data) =>{ // Carrega foto do usuario
           this.assetCollection = data;
-          console.log("URL: ", this.assetCollection);
+          // console.log("URL: ", this.assetCollection);
         });
 
         this.loading.dismiss(); // tira o loading depois de ter carregado os dados e a foto
 
       });
 
-      this.minhasMalas = fire.database.list('/minhasMalas');
-      this.minhasMalas.subscribe(snapshots => {
-        // this.badgeMinhasMalas = snapshots.numChildren();
-        snapshots.forEach(snapshot => {
-          this.badgeMinhasMalas++;
-        });
+      this.novaMala.emitir.subscribe(status => {
+        if(status == true){
+          var ref = firebase.database().ref('/minhasMalas');
+          var self = this;// gambiarra q eu n entendi
+          ref.once("value").then(function(snapshot){
+              self.badgeMinhasMalas = snapshot.child(firebase.auth().currentUser.uid).numChildren();
+          });
+        }
       });
+
+      this.minhasMalas = fire.database.list('/minhasMalas/' + firebase.auth().currentUser.uid);
+      // this.minhasMalas.subscribe(snapshots => {
+      //   // this.badgeMinhasMalas = snapshots.numChildren();
+      //   this.badgeMinhasMalas = snapshots.numChildren(firebase.auth().currentUser.uid);
+      //   // snapshots.forEach(snapshot => {
+      //   //
+      //   // });
+      // });
+
+
 
       }
 
@@ -79,6 +96,9 @@ export class PerfilPage {
           duration: 3000
         });
         loader.present();
+
+        //
+
       }
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,14 +143,33 @@ export class PerfilPage {
 
       }
 
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      deletar(id){
+        alert('id:' + id);
+        this.minhasMalas.remove(id);
+      }
+
 
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+      update(id){
+        this.nav.push(AtualizaMalaPage, {
+          id: id
+        });
+      }
+
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       ionViewDidLoad() {
         console.log('ionViewDidLoad PerfilPage');
         // this.presentLoading();
         // console.log('nome', this.userProfile.getNome());
+        var ref = firebase.database().ref('/minhasMalas');
+        var self = this;// gambiarra q eu n entendi
+        ref.once("value").then(function(snapshot){
+            self.badgeMinhasMalas = snapshot.child(firebase.auth().currentUser.uid).numChildren();
+        });
       }
 
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

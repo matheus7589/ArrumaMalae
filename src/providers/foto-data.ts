@@ -89,7 +89,7 @@ export class FotoData {
         return this.salvarParaAssetsDaBaseDeDados(_uploadSnapshot);
 
       }).then((_uploadSnapshot: any) => {
-        alert('Arquivo salvo para o catálogo com sucesso');
+        alert('Perfil atualizado com sucesso');
         this.loading.dismiss();
         // return this.assetCollection;
       }, (_error) => {
@@ -233,7 +233,7 @@ export class FotoData {
         // upa o blob
         return this.uploadParaFirebase(_imageBlob);
       }).then((_uploadSnapshot: any) => {
-        alert('Arquivo salvo para o catálogo com sucesso');
+        alert('Mala adicionada com sucesso');
         this.loading.dismiss();
 
         resolve(_uploadSnapshot.downloadURL);
