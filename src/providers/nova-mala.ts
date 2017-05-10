@@ -45,4 +45,13 @@ export class NovaMala {
       });
   }
 
+  ofertarMala(idMala){
+    var mala = firebase.database().ref('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala);
+    var oferta = firebase.database().ref('malasOfertadas/' + firebase.auth().currentUser.uid);
+
+    return oferta.push({
+      
+    })
+  }
+
 }

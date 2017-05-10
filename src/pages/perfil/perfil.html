@@ -36,15 +36,19 @@ Ionic pages and navigation.
   <ion-fab bottom right>
     <button ion-fab mini (click)="adicionarMala()"><ion-icon name="md-briefcase"></ion-icon></button>
   </ion-fab>
-
+  
   <div padding>
     <ion-segment [(ngModel)]="malas">
       <ion-segment-button value="minhas">
-        Minhas Malas
+        Minhas
         <ion-badge item-right>{{badgeMinhasMalas}}</ion-badge>
       </ion-segment-button>
       <ion-segment-button value="alugadas">
-        Malas Alugadas
+        Alugadas
+        <ion-badge item-right>2</ion-badge>
+      </ion-segment-button>
+      <ion-segment-button value="ofertadas">
+        Ofertadas
         <ion-badge item-right>2</ion-badge>
       </ion-segment-button>
     </ion-segment>
@@ -61,7 +65,7 @@ Ionic pages and navigation.
     </ion-list>
 
     <ion-list *ngSwitchCase="'minhas'">
-      <ion-item-sliding *ngFor="let mala of minhasMalas | async ">
+      <ion-item-sliding *ngFor="let mala of minhasMalas | async " class="button">
         <ion-item >
           <ion-thumbnail item-left>
             <img [src]="mala?.url">
@@ -81,6 +85,10 @@ Ionic pages and navigation.
           <button ion-button color="danger" (click)="deletar(mala.$key)">
             <ion-icon name="md-trash"></ion-icon>
             Excluir
+          </button>
+          <button ion-button color="Primary" (click)="ofertar(mala.$key)">
+            <ion-icon name="md-pricetag"></ion-icon>
+            Ofertar
           </button>
         </ion-item-options>
       </ion-item-sliding>
