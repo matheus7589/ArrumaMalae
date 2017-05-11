@@ -30,9 +30,10 @@ export class PerfilPage {
   userSobrenome: any;
   public loading;
   public alert;
-  minhasMalas: FirebaseListObservable<any>;
-  minhasOfertas: FirebaseListObservable<any>;
+  minhasMalas: FirebaseListObservable<any[]>;
+  minhasOfertas: FirebaseListObservable<any[]>;
   badgeMinhasMalas = 0;
+  badgeMinhasOfertas = 0;
   emitir: EventEmitter<true>;
 
   constructor(public nav: NavController, public fire: AngularFire, public authData: AuthData, public userData: UserData, usuario: Usuario,
@@ -72,6 +73,16 @@ export class PerfilPage {
           var self = this;// gambiarra q eu n entendi
           ref.once("value").then(function(snapshot){
             self.badgeMinhasMalas = snapshot.child(firebase.auth().currentUser.uid).numChildren();
+          });
+        }
+      });
+
+      this.novaMala.emitir.subscribe(status => {
+        if(status == true){
+          var ref = firebase.database().ref('/malasOfertadas');
+          var self = this;// gambiarra q eu n entendi
+          ref.once("value").then(function(snapshot){
+            self.badgeMinhasOfertas = snapshot.child(firebase.auth().currentUser.uid).numChildren();
           });
         }
       });
@@ -150,16 +161,20 @@ export class PerfilPage {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     deletar(id){
-      // alert('id:' + id);
+      // console.log('Deletou:' + id);
       this.minhasMalas.remove(id);
+      this.updateBadgeMinhasMalas();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ofertar(id){
-      this.novaMala.ofertarMala(id).then(()=>{
-        this.deletar(id);
+
+      this.novaMala.ofertarMala(id).then((data)=>{
+        var aux: any = data;
+        console.log("DATA: ", aux.tipo);
       });
+
 
     }
 
@@ -173,15 +188,33 @@ export class PerfilPage {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    ionViewDidLoad() {
-      console.log('ionViewDidLoad PerfilPage');
-      // this.presentLoading();
-      // console.log('nome', this.userProfile.getNome());
+    updateBadgeMinhasMalas(){
       var ref = firebase.database().ref('/minhasMalas');
       var self = this;// gambiarra q eu n entendi
       ref.once("value").then(function(snapshot){
         self.badgeMinhasMalas = snapshot.child(firebase.auth().currentUser.uid).numChildren();
       });
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    updateBadgeMinhasOfertas(){
+      var ref2 = firebase.database().ref('/malasOfertadas');
+      var self2 = this;// gambiarra q eu n entendi
+      ref2.once("value").then(function(snapshot){
+        self2.badgeMinhasOfertas = snapshot.child(firebase.auth().currentUser.uid).numChildren();
+      });
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ionViewDidLoad() {
+      console.log('ionViewDidLoad PerfilPage');
+      // this.presentLoading();
+      // console.log('nome', this.userProfile.getNome());
+      this.updateBadgeMinhasMalas();
+      this.updateBadgeMinhasOfertas();
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,6 +231,7 @@ export class PerfilPage {
     adicionarMala(){
       // alert('teste');
       this.nav.push(NovaMalaPage);
+      this.updateBadgeMinhasMalas();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -29,9 +29,6 @@ export class UserData {
           this.atualUser.setSobreNome(snapshot.val().sobrenome);
 
           resolve(this.atualUser);
-          // console.log('email: ', this.atualUser.getEmail());
-          // console.log('nome: ', snapshot.val().nome);
-          // console.log('sobrenome: ', snapshot.val().sobrenome);
         });
       }
     });

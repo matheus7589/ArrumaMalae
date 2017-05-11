@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 // import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase';
-import { AngularFire } from 'angularfire2';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 /*
 Generated class for the NovaMala provider.
@@ -13,7 +13,8 @@ for more info on providers and Angular 2 DI.
 @Injectable()
 export class NovaMala {
   public malas: any;
-  public aux: any;
+  // public itens: FirebaseListObservable<any>;
+  public auxiliar: any;
   emitir:EventEmitter<any> = new EventEmitter();
 
   constructor(public fire: AngularFire,) {
@@ -21,6 +22,8 @@ export class NovaMala {
     var pasta = firebase.auth().currentUser.uid;
 
     this.malas = firebase.database().ref('/minhasMalas/' + pasta);
+
+    // this.itens = fire.database.list('/minhasMalas/' + pasta);
   }
 
   addMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string, url: string): firebase.Promise<any>{
@@ -54,7 +57,7 @@ export class NovaMala {
     return new Promise((resolve, reject) => {
       var mala = this.fire.database.object('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala, { preserveSnapshot: true });
       mala.subscribe(snapshot => {
-        this.aux = {
+        var aux = {
           tipo: snapshot.val().tipo,
           tamanho: snapshot.val().tamanho,
           cor: snapshot.val().cor,
@@ -62,32 +65,40 @@ export class NovaMala {
           url: snapshot.val().url,
           alugada: false
         };
-        resolve(this.aux);
+        // console.log(aux);
+        resolve(aux);
       });
     });
 
   }
 
   ofertarMala(idMala: string){
-    // var mala = firebase.database().ref('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala);
+    // var mala = this.fire.database.list('/minhasMalas/' + firebase.auth().currentUser.uid);
     return new Promise((resolve, reject) => {
 
-      var oferta = firebase.database().ref('malasOfertadas/' + firebase.auth().currentUser.uid);
+      var oferta = firebase.database().ref('/malasOfertadas/' + firebase.auth().currentUser.uid);
 
       this.getMalaOferta(idMala).then((data) => {
-        var auxiliar: any = data;
-        oferta.push({
-          tipo: auxiliar.tipo,
-          tamanho: auxiliar.tamanho,
-          cor: auxiliar.cor,
-          modelo: auxiliar.modelo,
-          url: auxiliar.url,
+        this.auxiliar = data;
+
+      }).then((data)=>{
+        console.log("tipo: ", this.auxiliar);
+        return oferta.push({
+          tipo: this.auxiliar.tipo,
+          tamanho: this.auxiliar.tamanho,
+          cor: this.auxiliar.cor,
+          modelo: this.auxiliar.modelo,
+          url: this.auxiliar.url,
           alugada: false
+        }).then(()=>{
+          console.log("antes");
+          this.emitir.emit(true);
+          resolve(oferta);
+          // var aux: any = idMala;
+          // this.itens.remove(aux);
         });
+
       });
-
-      resolve(true);
-
 
     });
 
