@@ -13,6 +13,7 @@ for more info on providers and Angular 2 DI.
 @Injectable()
 export class NovaMala {
   public malas: any;
+  public aux: any;
   emitir:EventEmitter<any> = new EventEmitter();
 
   constructor(public fire: AngularFire,) {
@@ -48,27 +49,47 @@ export class NovaMala {
     });
   }
 
-  ofertarMala(idMala: string){
-    // var mala = firebase.database().ref('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala);
-    // return new Promise((resolve, reject) => {
+  getMalaOferta(idMala: string){
 
-      var oferta = firebase.database().ref('malasOfertadas/' + firebase.auth().currentUser.uid);
-
+    return new Promise((resolve, reject) => {
       var mala = this.fire.database.object('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala, { preserveSnapshot: true });
       mala.subscribe(snapshot => {
-
-        // resolve(this.atualUser);
-        return oferta.push({
+        this.aux = {
           tipo: snapshot.val().tipo,
           tamanho: snapshot.val().tamanho,
           cor: snapshot.val().cor,
           modelo: snapshot.val().modelo,
           url: snapshot.val().url,
           alugada: false
+        };
+        resolve(this.aux);
+      });
+    });
+
+  }
+
+  ofertarMala(idMala: string){
+    // var mala = firebase.database().ref('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala);
+    return new Promise((resolve, reject) => {
+
+      var oferta = firebase.database().ref('malasOfertadas/' + firebase.auth().currentUser.uid);
+
+      this.getMalaOferta(idMala).then((data) => {
+        var auxiliar: any = data;
+        oferta.push({
+          tipo: auxiliar.tipo,
+          tamanho: auxiliar.tamanho,
+          cor: auxiliar.cor,
+          modelo: auxiliar.modelo,
+          url: auxiliar.url,
+          alugada: false
         });
       });
 
-    // });
+      resolve(true);
+
+
+    });
 
 
 
