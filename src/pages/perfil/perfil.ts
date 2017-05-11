@@ -31,6 +31,7 @@ export class PerfilPage {
   public loading;
   public alert;
   minhasMalas: FirebaseListObservable<any>;
+  minhasOfertas: FirebaseListObservable<any>;
   badgeMinhasMalas = 0;
   emitir: EventEmitter<true>;
 
@@ -76,6 +77,8 @@ export class PerfilPage {
       });
 
       this.minhasMalas = fire.database.list('/minhasMalas/' + firebase.auth().currentUser.uid);
+      this.minhasOfertas = fire.database.list('/malasOfertadas/' + firebase.auth().currentUser.uid);
+
       // this.minhasMalas.subscribe(snapshots => {
       //   // this.badgeMinhasMalas = snapshots.numChildren();
       //   this.badgeMinhasMalas = snapshots.numChildren(firebase.auth().currentUser.uid);
@@ -155,6 +158,7 @@ export class PerfilPage {
 
     ofertar(id){
       this.novaMala.ofertarMala(id);
+      this.deletar(id);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
