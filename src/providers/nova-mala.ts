@@ -68,17 +68,7 @@ export class NovaMala {
           alugada: false,
           ofertada: false
         };
-
-        mala.set({
-          tipo: snapshot.val().tipo,
-          tamanho: snapshot.val().tamanho,
-          cor: snapshot.val().cor,
-          modelo: snapshot.val().modelo,
-          url: snapshot.val().url,
-          alugada: false,
-          ofertada: true
-        });
-        // console.log(aux);
+        console.log("teste");
         resolve(aux);
       });
     });
@@ -87,12 +77,22 @@ export class NovaMala {
 
   ofertarMala(idMala: string){
     // var mala = this.fire.database.list('/minhasMalas/' + firebase.auth().currentUser.uid);
+    var mala = this.fire.database.object('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala, { preserveSnapshot: true });
     return new Promise((resolve, reject) => {
 
       var oferta = firebase.database().ref('/malasOfertadas/' + firebase.auth().currentUser.uid + '/' + idMala);
 
       this.getMalaOferta(idMala).then((data) => {
         this.auxiliar = data;
+        return mala.set({
+          tipo: this.auxiliar.tipo,
+          tamanho: this.auxiliar.tamanho,
+          cor: this.auxiliar.cor,
+          modelo: this.auxiliar.modelo,
+          url: this.auxiliar.url,
+          alugada: false,
+          ofertada: true
+        });
 
       }).then((data)=>{
         console.log("tipo: ", this.auxiliar);

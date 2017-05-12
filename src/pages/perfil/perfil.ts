@@ -167,11 +167,12 @@ export class PerfilPage {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     deletarOfertada(id){
+      var mala = this.fire.database.object('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + id, { preserveSnapshot: true });
 
       return new Promise((resolve, reject) => {
-        var mala = this.fire.database.object('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + id, { preserveSnapshot: true });
+
         mala.subscribe(snapshot => {
-          mala.set({
+          var aux = {
             tipo: snapshot.val().tipo,
             tamanho: snapshot.val().tamanho,
             cor: snapshot.val().cor,
@@ -179,12 +180,23 @@ export class PerfilPage {
             url: snapshot.val().url,
             alugada: false,
             ofertada: false
-          });
+          };
           console.log('Deletou:' + id);
+          resolve(aux);
         });
-        resolve(mala);
+
       }).then((data)=>{
-        console.log("ID", id);
+        var aux: any = data;
+        mala.set({
+          tipo: aux.tipo,
+          tamanho: aux.tamanho,
+          cor: aux.cor,
+          modelo: aux.modelo,
+          url: aux.url,
+          alugada: false,
+          ofertada: false
+        });
+        // console.log("ID", id);
         this.minhasOfertas.remove(id);
         this.updateBadgeMinhasOfertas();
       })
