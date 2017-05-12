@@ -98,8 +98,6 @@ export class PerfilPage {
       //   // });
       // });
 
-
-
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,11 +166,38 @@ export class PerfilPage {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    deletarOfertada(id){
+
+      return new Promise((resolve, reject) => {
+        var mala = this.fire.database.object('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + id, { preserveSnapshot: true });
+        mala.subscribe(snapshot => {
+          mala.set({
+            tipo: snapshot.val().tipo,
+            tamanho: snapshot.val().tamanho,
+            cor: snapshot.val().cor,
+            modelo: snapshot.val().modelo,
+            url: snapshot.val().url,
+            alugada: false,
+            ofertada: false
+          });
+          console.log('Deletou:' + id);
+        });
+        resolve(mala);
+      }).then((data)=>{
+        console.log("ID", id);
+        this.minhasOfertas.remove(id);
+        this.updateBadgeMinhasOfertas();
+      })
+
+      // this.minhasOfertas.remove(id);
+      // this.updateBadgeMinhasOfertas();
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     ofertar(id){
 
       this.novaMala.ofertarMala(id).then((data)=>{
-        var aux: any = data;
-        console.log("DATA: ", aux.tipo);
       });
 
 

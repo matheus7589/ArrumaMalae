@@ -34,7 +34,8 @@ export class NovaMala {
       cor: cor,
       modelo: modelo,
       url: url,
-      alugada: false
+      alugada: false,
+      ofertada: false
     }).then(()=>{
       this.emitir.emit(true);
     });
@@ -48,7 +49,8 @@ export class NovaMala {
       cor: cor,
       modelo: modelo,
       url: url,
-      alugada: false
+      alugada: false,
+      ofertada: false
     });
   }
 
@@ -63,8 +65,19 @@ export class NovaMala {
           cor: snapshot.val().cor,
           modelo: snapshot.val().modelo,
           url: snapshot.val().url,
-          alugada: false
+          alugada: false,
+          ofertada: false
         };
+
+        mala.set({
+          tipo: snapshot.val().tipo,
+          tamanho: snapshot.val().tamanho,
+          cor: snapshot.val().cor,
+          modelo: snapshot.val().modelo,
+          url: snapshot.val().url,
+          alugada: false,
+          ofertada: true
+        });
         // console.log(aux);
         resolve(aux);
       });
@@ -76,20 +89,21 @@ export class NovaMala {
     // var mala = this.fire.database.list('/minhasMalas/' + firebase.auth().currentUser.uid);
     return new Promise((resolve, reject) => {
 
-      var oferta = firebase.database().ref('/malasOfertadas/' + firebase.auth().currentUser.uid);
+      var oferta = firebase.database().ref('/malasOfertadas/' + firebase.auth().currentUser.uid + '/' + idMala);
 
       this.getMalaOferta(idMala).then((data) => {
         this.auxiliar = data;
 
       }).then((data)=>{
         console.log("tipo: ", this.auxiliar);
-        return oferta.push({
+        return oferta.set({
           tipo: this.auxiliar.tipo,
           tamanho: this.auxiliar.tamanho,
           cor: this.auxiliar.cor,
           modelo: this.auxiliar.modelo,
           url: this.auxiliar.url,
-          alugada: false
+          alugada: false,
+          ofertada: true
         }).then(()=>{
           console.log("antes");
           this.emitir.emit(true);
