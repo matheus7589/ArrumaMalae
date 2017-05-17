@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { PerfilPage } from '../pages/perfil/perfil';
+import { PesquisarPage } from '../pages/pesquisar/pesquisar';
 
 
 import firebase from 'firebase';
@@ -34,7 +35,7 @@ export class MyApp {
             this.rootPage = LoginPage;
             unsubscribe();
           } else {
-            this.rootPage = PerfilPage;
+            this.rootPage = PesquisarPage;
             unsubscribe();
           }
         });

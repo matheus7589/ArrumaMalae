@@ -18,6 +18,7 @@ import { ResetarSenhaPage } from '../pages/resetar-senha/resetar-senha';
 import { CadastrarPage } from '../pages/cadastrar/cadastrar';
 import { NovaMalaPage } from '../pages/nova-mala/nova-mala';
 import { AtualizaMalaPage } from '../pages/atualiza-mala/atualiza-mala';
+import { PesquisarPage } from '../pages/pesquisar/pesquisar';
 
 
 // Import providers
@@ -49,7 +50,8 @@ export const firebaseConfig = {
     ResetarSenhaPage,
     CadastrarPage,
     NovaMalaPage,
-    AtualizaMalaPage
+    AtualizaMalaPage,
+    PesquisarPage
     // Usuario
   ],
   imports: [
@@ -68,7 +70,8 @@ export const firebaseConfig = {
     ResetarSenhaPage,
     CadastrarPage,
     NovaMalaPage,
-    AtualizaMalaPage
+    AtualizaMalaPage,
+    PesquisarPage
   ],
   providers: [
     StatusBar,

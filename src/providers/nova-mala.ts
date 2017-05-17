@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 // import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire } from 'angularfire2';
 
 /*
 Generated class for the NovaMala provider.
