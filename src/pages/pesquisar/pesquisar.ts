@@ -1,55 +1,85 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 import firebase from 'firebase';
 
 /*
-  Generated class for the Pesquisar page.
+Generated class for the Pesquisar page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+See http://ionicframework.com/docs/v2/components/#navigation for more info on
+Ionic pages and navigation.
 */
 @Component({
   selector: 'page-pesquisar',
   templateUrl: 'pesquisar.html'
 })
-export class PesquisarPage {
-
-  searchQuery: string = '';
-  items: string[];
-  ofertas: any;
+export class PesquisarPage implements OnInit {
+  searching: any = false;
+  public ofertasLista: Array<any>;
+  public ofertasListaCarregadas: Array<any>;
+  public ofertaRef:firebase.database.Reference;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fire: AngularFire) {
-    this.initializeItems();
+    this.ofertaRef = firebase.database().ref('/malasOfertadas/' + firebase.auth().currentUser.uid);
+    this.initializeData();
   }
 
-  initializeItems() {
+  initializeData() {
     // this.items = [
     //   'Amsterdam',
     //   'Bogota',
     // ];
-    this.ofertas = this.fire.database.list('/malasOfertadas/' + firebase.auth().currentUser.uid);
+    // this.ofertas = this.fire.database.list('/malasOfertadas/' + firebase.auth().currentUser.uid);
+    this.ofertaRef.on('value', ofertasLista => {
+      let ofertas = [];
+      ofertasLista.forEach( oferta => {
+        ofertas.push(oferta.val());
+        return false;
+      });
+
+      this.ofertasLista = ofertas;
+      this.ofertasListaCarregadas = ofertas;
+    });
+
   }
 
-  getItems(ev: any) {
+  initializeItems(): void {
+    this.ofertasLista = this.ofertasListaCarregadas;
+  }
+
+  ngOnInit(){
+    //called after the constructor and called  after the first ngOnChanges()
+    // this.initializeItems();
+  }
+
+  getItems(searchbar) {
+    this.searching = false;
     // Reset items back to all of the items
     this.initializeItems();
 
-    // set val to the value of the searchbar
-    let val = ev.target.value;
+    // set q to the value of the searchbar
+    var q = searchbar.srcElement.value;
+
 
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.ofertas = this.ofertas.filter((item) =>{
-        console.log(item);
-        return (item.modelo.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-      // this.items = this.items.filter((item) => {
-      //   return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      // })
+    if (!q) {
+      return;
     }
-  }
+
+    // if the value is an empty string don't filter the items
+    this.ofertasLista = this.ofertasLista.filter((v) => {
+    if(v.modelo && q) {
+      if (v.modelo.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+        this.searching = true;
+        return true;
+      }
+      return false;
+    }
+  });
+  console.log(q, this.ofertasLista.length);
+
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PesquisarPage');
