@@ -5,8 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 // import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
-import { PerfilPage } from '../pages/perfil/perfil';
-import { PesquisarPage } from '../pages/pesquisar/pesquisar';
+// import { PerfilPage } from '../pages/perfil/perfil';
+// import { PesquisarPage } from '../pages/pesquisar/pesquisar';
 import { MenuPage } from '../pages/menu/menu';
 
 
