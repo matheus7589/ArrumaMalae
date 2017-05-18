@@ -4,6 +4,8 @@ import { PesquisarPage } from '../../pages/pesquisar/pesquisar';
 import { LoginPage } from '../../pages/login/login';
 import { AuthData } from '../../providers/auth-data';
 import { PerfilPage } from '../../pages/perfil/perfil';
+import { ConversasPage } from '../../pages/conversas/conversas';
+import { ChatPage } from '../../pages/chat/chat';
 
 /*
   Generated class for the Menu page.
@@ -19,14 +21,17 @@ export class MenuPage {
   private rootPage;
   private pesquisarPage;
   private perfilPage;
+  private conversasPage;
+  private chatPage;
 
 
   constructor(public nav: NavController, public navParams: NavParams, public authData: AuthData) {
 
-    this.rootPage = PesquisarPage;
-
     this.pesquisarPage = PesquisarPage;
+    this.rootPage = this.pesquisarPage;
     this.perfilPage = PerfilPage;
+    this.conversasPage = ConversasPage;
+    this.chatPage = ChatPage;
 
   }
 

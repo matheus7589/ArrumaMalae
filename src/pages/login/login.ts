@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { CadastrarPage } from '../cadastrar/cadastrar';
 // import { HomePage } from '../home/home';
-import { PerfilPage } from '../perfil/perfil';
+import { MenuPage } from '../menu/menu';
 import { ResetarSenhaPage } from '../resetar-senha/resetar-senha';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
@@ -47,7 +47,7 @@ export class LoginPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
         this.loading.dismiss().then( () => {
-          this.nav.setRoot(PerfilPage);
+          this.nav.setRoot(MenuPage);
         });
       }, error => {
         this.loading.dismiss().then( () => {

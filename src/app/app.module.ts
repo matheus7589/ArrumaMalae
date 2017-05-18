@@ -21,6 +21,8 @@ import { AtualizaMalaPage } from '../pages/atualiza-mala/atualiza-mala';
 import { PesquisarPage } from '../pages/pesquisar/pesquisar';
 import { MalaOfertaPage } from '../pages/mala-oferta/mala-oferta';
 import { MenuPage } from '../pages/menu/menu';
+import { ChatPage } from '../pages/chat/chat';
+import { ConversasPage } from '../pages/conversas/conversas';
 
 
 // Import providers
@@ -55,7 +57,9 @@ export const firebaseConfig = {
     AtualizaMalaPage,
     PesquisarPage,
     MalaOfertaPage,
-    MenuPage
+    MenuPage,
+    ChatPage,
+    ConversasPage
     // Usuario
   ],
   imports: [
@@ -77,7 +81,9 @@ export const firebaseConfig = {
     AtualizaMalaPage,
     PesquisarPage,
     MalaOfertaPage,
-    MenuPage
+    MenuPage,
+    ChatPage,
+    ConversasPage
   ],
   providers: [
     StatusBar,

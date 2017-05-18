@@ -1,0 +1,43 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Chat</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-list>
+      <ion-item *ngFor="let item of firelist | async">
+        <ion-avatar item-left>
+          <img [src]="item?.url">
+        </ion-avatar>
+        <h2 class="chat-username">
+          {{item?.nome}}
+        </h2>
+        <p class="chat-text">{{item?.chat_text}}</p>
+        <h6 class="chat-time">{{item?.timestamp | date:'dd/MM/yyyy'}}</h6>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  <ion-footer>
+    <form #f="ngForm">
+      <ion-grid>
+        <ion-row>
+          <ion-col width-80>
+            <ion-input [(ngModel)]="chat" name="chatText" required placeholder="menssagem..."></ion-input>
+          </ion-col>
+          <ion-col width-20 center>
+            <button ion-button round (click)="chatSend(f.value, f.valid)" full [disabled]="f.valid === false">
+              <ion-icon name="md-send"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-footer>
