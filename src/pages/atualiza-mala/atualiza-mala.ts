@@ -23,7 +23,7 @@ export class AtualizaMalaPage {
   public modelo; tipo; tamanho; cor;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
+  constructor(public nav: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
     public actionSheetCtrl: ActionSheetController, public fotoData: FotoData, public novaMala: NovaMala, public fire: AngularFire) {
 
       this.atualizaMalaForm = formBuilder.group({
@@ -31,7 +31,8 @@ export class AtualizaMalaPage {
         tamanho: ['', Validators.compose([Validators.required])],
         // foto: ['', Validators.compose([Validators.required])],
         cor: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-        modelo: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
+        modelo: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        valor: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
       });
 
       this.id = navParams.get('id');
@@ -57,7 +58,8 @@ export class AtualizaMalaPage {
             tamanho: snapshot.val().tamanho,
             cor: snapshot.val().cor,
             modelo: snapshot.val().modelo,
-            url: snapshot.val().url
+            url: snapshot.val().url,
+            valor: snapshot.val().valor
           };
           // console.log(snapshot.tamanho);
           resolve(mala);
@@ -117,8 +119,8 @@ export class AtualizaMalaPage {
         // alert('Entrou');
         this.urlMala.url = data;
         this.novaMala.atualizaMala(this.atualizaMalaForm.value.tipo, this.atualizaMalaForm.value.tamanho, this.atualizaMalaForm.value.foto,
-          this.atualizaMalaForm.value.cor, this.atualizaMalaForm.value.modelo, this.urlMala.url, this.id).then(() => {
-
+          this.atualizaMalaForm.value.cor, this.atualizaMalaForm.value.modelo, this.urlMala.url, this.id, this.atualizaMalaForm.value.valor).then(() => {
+            this.nav.pop();
           });
         }, (_error) => {
           alert('Erro ' + (_error.message || _error));

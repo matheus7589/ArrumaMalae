@@ -123,7 +123,7 @@ export class FotoData {
 
           var reader = new FileReader();
           reader.onloadend = (evt: any) => {
-            var imgBlob: any = new Blob([evt.target.result], { type: 'image/jpeg/jpg' });
+            var imgBlob: any = new Blob([evt.target.result], { type: 'image/jpeg/jpg/png' });
             imgBlob.name = 'amostra.jpg';
             resolve(imgBlob);
           };

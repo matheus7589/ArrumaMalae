@@ -21,7 +21,7 @@ export class NovaMalaPage {
   public urlMala;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
+  constructor(public nav: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
     public actionSheetCtrl: ActionSheetController, public fotoData: FotoData, public novaMala: NovaMala) {
 
       this.novaMalaForm = formBuilder.group({
@@ -29,7 +29,8 @@ export class NovaMalaPage {
         tamanho: ['', Validators.compose([Validators.required])],
         // foto: ['', Validators.compose([Validators.required])],
         cor: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
-        modelo: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
+        modelo: ['', Validators.compose([Validators.maxLength(30), Validators.required])],
+        valor: ['', Validators.compose([Validators.maxLength(30), Validators.required])]
       })
       this.urlMala = "assets/images/no-image.jpg";
 
@@ -82,8 +83,8 @@ export class NovaMalaPage {
         // alert('Entrou');
         this.urlMala = data;
         this.novaMala.addMala(this.novaMalaForm.value.tipo, this.novaMalaForm.value.tamanho, this.novaMalaForm.value.foto,
-          this.novaMalaForm.value.cor, this.novaMalaForm.value.modelo, this.urlMala).then(() => {
-
+          this.novaMalaForm.value.cor, this.novaMalaForm.value.modelo, this.urlMala, this.novaMalaForm.value.valor).then(() => {
+            this.nav.pop();
           });
         }, (_error) => {
           alert('Erro ' + (_error.message || _error));

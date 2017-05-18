@@ -83,6 +83,17 @@ Ionic pages and navigation.
 <p>Por favor, entre com o tamanho da mala.</p>
 </ion-item>
 
+<ion-item>
+  <ion-label stacked>Valor</ion-label>
+  <ion-input formControlName="valor" type="text" placeholder="Valor Sugerido"
+  [class.invalid]="!novaMalaForm.controls.valor.valid && novaMalaForm.controls.valor.dirty">
+</ion-input>
+</ion-item>
+<ion-item class="error-message"
+*ngIf="!novaMalaForm.controls.valor.valid && novaMalaForm.controls.valor.dirty">
+<p>Por favor, entre com o valor da mala.</p>
+</ion-item>
+
 
 <button ion-button block type="submit">
   Adicionar Mala

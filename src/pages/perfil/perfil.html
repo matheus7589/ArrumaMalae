@@ -12,11 +12,11 @@ Ionic pages and navigation.
     </button>
     <ion-title>Perfil</ion-title>
 
-    <ion-buttons start>
+    <!-- <ion-buttons start>
       <button ion-button icon-only color="royal" (click)="logOut()">Sair
         <ion-icon name="md-log-out"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
     <!-- <ion-title>Send To...</ion-title>
     <ion-buttons end> -->
   </ion-navbar>
@@ -105,11 +105,11 @@ Ionic pages and navigation.
         <!-- </div> -->
         </ion-item>
         <ion-item-options side="right">
-          <button ion-button color="secondary" (click)="update(mala.$key)">
+          <button [disabled]="mala?.alugada || mala?.ofertada" ion-button color="secondary" (click)="update(mala.$key)">
             <ion-icon name="md-create"></ion-icon>
             Editar
           </button>
-          <button ion-button color="danger" (click)="deletar(mala.$key)">
+          <button [disabled]="mala?.alugada || mala?.ofertada" ion-button color="danger" (click)="deletar(mala.$key)">
             <ion-icon name="md-trash"></ion-icon>
             Excluir
           </button>

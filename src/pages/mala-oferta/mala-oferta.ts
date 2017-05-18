@@ -27,7 +27,7 @@ export class MalaOfertaPage {
 
     this.id = navParams.get('id');
 
-    this.malaRef = fire.database.object('/malasOfertadas/' + firebase.auth().currentUser.uid + '/' + this.id, { preserveSnapshot: true });
+    this.malaRef = fire.database.object('/malasParaAlugar/' + this.id, { preserveSnapshot: true });
 
     this.getData().then((data) => {
       var auxiliar: any = data;
@@ -47,7 +47,8 @@ export class MalaOfertaPage {
           cor: snapshot.val().cor,
           modelo: snapshot.val().modelo,
           tamanho: snapshot.val().tamanho,
-          tipo: snapshot.val().tipo
+          tipo: snapshot.val().tipo,
+          valor: snapshot.val().valor
         }
         resolve(data);
       });

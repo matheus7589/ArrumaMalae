@@ -26,7 +26,7 @@ export class NovaMala {
     // this.itens = fire.database.list('/minhasMalas/' + pasta);
   }
 
-  addMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string, url: string): firebase.Promise<any>{
+  addMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string, url: string, valor: string): firebase.Promise<any>{
     // console.log("tipo", tipo);
     return this.malas.push({
       tipo: tipo,
@@ -35,13 +35,14 @@ export class NovaMala {
       modelo: modelo,
       url: url,
       alugada: false,
-      ofertada: false
+      ofertada: false,
+      valor: valor
     }).then(()=>{
       this.emitir.emit(true);
     });
   }
 
-  atualizaMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string, url: string, idMala: string): firebase.Promise<any>{
+  atualizaMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string, url: string, idMala: string, valor: string): firebase.Promise<any>{
     var mala = firebase.database().ref('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + idMala)
     return mala.set({
       tipo: tipo,
@@ -50,7 +51,8 @@ export class NovaMala {
       modelo: modelo,
       url: url,
       alugada: false,
-      ofertada: false
+      ofertada: false,
+      valor: valor
     });
   }
 
@@ -66,7 +68,8 @@ export class NovaMala {
           modelo: snapshot.val().modelo,
           url: snapshot.val().url,
           alugada: false,
-          ofertada: false
+          ofertada: false,
+          valor: snapshot.val().valor
         };
         // console.log("teste");
         resolve(aux);
@@ -93,7 +96,8 @@ export class NovaMala {
           modelo: this.auxiliar.modelo,
           url: this.auxiliar.url,
           alugada: false,
-          ofertada: true
+          ofertada: true,
+          valor: this.auxiliar.valor
         });
 
       }).then((data)=>{
@@ -105,7 +109,8 @@ export class NovaMala {
           modelo: this.auxiliar.modelo,
           url: this.auxiliar.url,
           alugada: false,
-          ofertada: true
+          ofertada: true,
+          valor: this.auxiliar.valor
         }).then(()=>{
 
           paraAlugar.set({
@@ -117,7 +122,8 @@ export class NovaMala {
             alugada: false,
             ofertada: true,
             idmala: idMala,
-            iduser: firebase.auth().currentUser.uid
+            iduser: firebase.auth().currentUser.uid,
+            valor: this.auxiliar.valor
           });
 
           // console.log("antes");

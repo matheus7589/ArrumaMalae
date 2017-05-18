@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { PesquisarPage } from '../../pages/pesquisar/pesquisar';
+import { LoginPage } from '../../pages/login/login';
+import { AuthData } from '../../providers/auth-data';
 import { PerfilPage } from '../../pages/perfil/perfil';
 
 /*
@@ -19,7 +21,7 @@ export class MenuPage {
   private perfilPage;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public nav: NavController, public navParams: NavParams, public authData: AuthData) {
 
     this.rootPage = PesquisarPage;
 
@@ -34,6 +36,12 @@ export class MenuPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
+  }
+
+  logOut(){
+    this.authData.logoutUser().then(() => {
+      this.nav.setRoot(LoginPage);
+    });
   }
 
 }

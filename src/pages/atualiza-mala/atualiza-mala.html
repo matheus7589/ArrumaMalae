@@ -82,6 +82,17 @@
   <p>Por favor, entre com o tamanho da mala.</p>
   </ion-item>
 
+  <ion-item>
+    <ion-label stacked>Valor</ion-label>
+    <ion-input formControlName="valor" type="text" placeholder="Valor Sugerido" [value]="urlMala.valor"
+    [class.invalid]="!atualizaMalaForm.controls.valor.valid && atualizaMalaForm.controls.valor.dirty">
+  </ion-input>
+  </ion-item>
+  <ion-item class="error-message"
+  *ngIf="!atualizaMalaForm.controls.valor.valid && atualizaMalaForm.controls.valor.dirty">
+  <p>Por favor, entre com o valor da mala.</p>
+  </ion-item>
+
 
   <button ion-button block type="submit">
   Atualizar Mala

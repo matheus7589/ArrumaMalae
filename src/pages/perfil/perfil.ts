@@ -2,7 +2,7 @@ import { Component, NgZone, EventEmitter } from '@angular/core';
 import { NavController, Platform, ActionSheetController, LoadingController, AlertController } from 'ionic-angular';
 import { AuthData } from '../../providers/auth-data';
 import { UserData } from '../../providers/user-data';
-import { LoginPage } from '../../pages/login/login';
+// import { LoginPage } from '../../pages/login/login';
 import { NovaMalaPage } from '../../pages/nova-mala/nova-mala';
 import { AtualizaMalaPage } from '../../pages/atualiza-mala/atualiza-mala';
 import { NovaMala } from '../../providers/nova-mala';
@@ -181,7 +181,8 @@ export class PerfilPage {
             modelo: snapshot.val().modelo,
             url: snapshot.val().url,
             alugada: false,
-            ofertada: false
+            ofertada: false,
+            valor: snapshot.val().valor
           };
           console.log('Deletou:' + id);
           resolve(aux);
@@ -196,7 +197,8 @@ export class PerfilPage {
           modelo: aux.modelo,
           url: aux.url,
           alugada: false,
-          ofertada: false
+          ofertada: false,
+          valor: aux.valor
         });
         console.log("ID", id);
         paraAlugar.remove(id);
@@ -261,11 +263,11 @@ export class PerfilPage {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    logOut(){
-      this.authData.logoutUser().then(() => {
-        this.nav.setRoot(LoginPage);
-      });
-    }
+    // logOut(){
+    //   this.authData.logoutUser().then(() => {
+    //     this.nav.setRoot(LoginPage);
+    //   });
+    // }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

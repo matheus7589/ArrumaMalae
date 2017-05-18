@@ -12,14 +12,17 @@
   <ion-content>
     <ion-list>
       <button ion-item menuClose (click)="openPage(pesquisarPage)">
+        <ion-icon name="md-search" item-left></ion-icon>
         Pesquisar
       </button>
       <button ion-item menuClose (click)="openPage(perfilPage)">
+        <ion-icon name="md-contact" item-left></ion-icon>
         Perfil
       </button>
-      <!-- <button ion-item menuClose (click)="openPage(dogsPage)">
-        Dogs
-      </button> -->
+      <button ion-item menuClose (click)="logOut()">
+        <ion-icon name="md-log-out" item-left></ion-icon>
+        sair
+      </button>
     </ion-list>
   </ion-content>
 
