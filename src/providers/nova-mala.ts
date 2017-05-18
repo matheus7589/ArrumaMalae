@@ -27,7 +27,7 @@ export class NovaMala {
   }
 
   addMala(tipo: string, tamanho: string, foto: string, cor: string, modelo: string, url: string): firebase.Promise<any>{
-    console.log("tipo", tipo);
+    // console.log("tipo", tipo);
     return this.malas.push({
       tipo: tipo,
       tamanho: tamanho,
@@ -68,7 +68,7 @@ export class NovaMala {
           alugada: false,
           ofertada: false
         };
-        console.log("teste");
+        // console.log("teste");
         resolve(aux);
       });
     });
@@ -81,6 +81,8 @@ export class NovaMala {
     return new Promise((resolve, reject) => {
 
       var oferta = firebase.database().ref('/malasOfertadas/' + firebase.auth().currentUser.uid + '/' + idMala);
+
+      var paraAlugar = firebase.database().ref('/malasParaAlugar/' + idMala);
 
       this.getMalaOferta(idMala).then((data) => {
         this.auxiliar = data;
@@ -95,7 +97,7 @@ export class NovaMala {
         });
 
       }).then((data)=>{
-        console.log("tipo: ", this.auxiliar);
+        // console.log("tipo: ", this.auxiliar);
         return oferta.set({
           tipo: this.auxiliar.tipo,
           tamanho: this.auxiliar.tamanho,
@@ -105,7 +107,20 @@ export class NovaMala {
           alugada: false,
           ofertada: true
         }).then(()=>{
-          console.log("antes");
+
+          paraAlugar.set({
+            tipo: this.auxiliar.tipo,
+            tamanho: this.auxiliar.tamanho,
+            cor: this.auxiliar.cor,
+            modelo: this.auxiliar.modelo,
+            url: this.auxiliar.url,
+            alugada: false,
+            ofertada: true,
+            idmala: idMala,
+            iduser: firebase.auth().currentUser.uid
+          });
+
+          // console.log("antes");
           this.emitir.emit(true);
           resolve(oferta);
           // var aux: any = idMala;

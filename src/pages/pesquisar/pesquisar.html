@@ -7,7 +7,10 @@ Ionic pages and navigation.
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>pesquisar</ion-title>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <ion-title>Pesquisar</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,19 +21,19 @@ Ionic pages and navigation.
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 
   <!-- <div *ngIf="searching" class="spinner-container">
-    <ion-spinner></ion-spinner>
-  </div> -->
+  <ion-spinner></ion-spinner>
+</div> -->
 
-  <ion-list>
-    <ion-item *ngFor="let oferta of ofertasLista">
-      <ion-thumbnail item-left>
-        <img [src]="oferta?.url">
-      </ion-thumbnail>
-      <p>Cor: {{oferta?.cor}}</p>
-      <p>Modelo: {{oferta?.modelo}}</p>
-      <p>Tamanho: {{oferta?.tamanho}}</p>
-      <p>Tipo: {{oferta?.tipo}}</p>
-    </ion-item>
-  </ion-list>
+<ion-list>
+  <ion-item *ngFor="let oferta of ofertasLista" (click)="itemSelected(oferta?.idmala)">
+    <ion-thumbnail item-left>
+      <img [src]="oferta?.url">
+    </ion-thumbnail>
+    <p>Cor: {{oferta?.cor}}</p>
+    <p>Modelo: {{oferta?.modelo}}</p>
+    <p>Tamanho: {{oferta?.tamanho}}</p>
+    <p>Tipo: {{oferta?.tipo}}</p>
+  </ion-item>
+</ion-list>
 
 </ion-content>

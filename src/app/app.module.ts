@@ -19,6 +19,8 @@ import { CadastrarPage } from '../pages/cadastrar/cadastrar';
 import { NovaMalaPage } from '../pages/nova-mala/nova-mala';
 import { AtualizaMalaPage } from '../pages/atualiza-mala/atualiza-mala';
 import { PesquisarPage } from '../pages/pesquisar/pesquisar';
+import { MalaOfertaPage } from '../pages/mala-oferta/mala-oferta';
+import { MenuPage } from '../pages/menu/menu';
 
 
 // Import providers
@@ -51,7 +53,9 @@ export const firebaseConfig = {
     CadastrarPage,
     NovaMalaPage,
     AtualizaMalaPage,
-    PesquisarPage
+    PesquisarPage,
+    MalaOfertaPage,
+    MenuPage
     // Usuario
   ],
   imports: [
@@ -71,7 +75,9 @@ export const firebaseConfig = {
     CadastrarPage,
     NovaMalaPage,
     AtualizaMalaPage,
-    PesquisarPage
+    PesquisarPage,
+    MalaOfertaPage,
+    MenuPage
   ],
   providers: [
     StatusBar,

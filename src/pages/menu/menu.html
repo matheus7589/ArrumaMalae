@@ -1,0 +1,28 @@
+
+<ion-menu [content]="mycontent">
+
+  <ion-header>
+    <ion-navbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-navbar>
+
+  </ion-header>
+
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose (click)="openPage(pesquisarPage)">
+        Pesquisar
+      </button>
+      <button ion-item menuClose (click)="openPage(perfilPage)">
+        Perfil
+      </button>
+      <!-- <button ion-item menuClose (click)="openPage(dogsPage)">
+        Dogs
+      </button> -->
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>

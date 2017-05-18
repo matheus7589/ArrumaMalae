@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { MalaOfertaPage } from '../../pages/mala-oferta/mala-oferta';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 import firebase from 'firebase';
@@ -14,15 +15,16 @@ Ionic pages and navigation.
   selector: 'page-pesquisar',
   templateUrl: 'pesquisar.html'
 })
-export class PesquisarPage implements OnInit {
+export class PesquisarPage{
   searching: any = false;
   public ofertasLista: Array<any>;
   public ofertasListaCarregadas: Array<any>;
   public ofertaRef:firebase.database.Reference;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fire: AngularFire) {
-    this.ofertaRef = firebase.database().ref('/malasOfertadas/' + firebase.auth().currentUser.uid);
+  constructor(public nav: NavController, public navParams: NavParams, public fire: AngularFire) {
+    this.ofertaRef = firebase.database().ref('/malasParaAlugar/');
     this.initializeData();
+    this.initializeItems();
   }
 
   initializeData() {
@@ -34,6 +36,7 @@ export class PesquisarPage implements OnInit {
     this.ofertaRef.on('value', ofertasLista => {
       let ofertas = [];
       ofertasLista.forEach( oferta => {
+        // console.log('oferta: ', oferta.val());
         ofertas.push(oferta.val());
         return false;
       });
@@ -48,10 +51,6 @@ export class PesquisarPage implements OnInit {
     this.ofertasLista = this.ofertasListaCarregadas;
   }
 
-  ngOnInit(){
-    //called after the constructor and called  after the first ngOnChanges()
-    // this.initializeItems();
-  }
 
   getItems(searchbar) {
     this.searching = false;
@@ -81,7 +80,16 @@ export class PesquisarPage implements OnInit {
 
 }
 
+itemSelected(id){
+  // console.log('ID:  ', id);
+  this.nav.push(MalaOfertaPage, {
+    id: id
+  });
+}
+
   ionViewDidLoad() {
+      this.initializeData();
+      this.initializeItems();
     console.log('ionViewDidLoad PesquisarPage');
   }
 

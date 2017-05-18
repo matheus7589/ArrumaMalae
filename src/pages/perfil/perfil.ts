@@ -169,6 +169,8 @@ export class PerfilPage {
     deletarOfertada(id){
       var mala = this.fire.database.object('/minhasMalas/' + firebase.auth().currentUser.uid + '/' + id, { preserveSnapshot: true });
 
+      var paraAlugar = this.fire.database.list('/malasParaAlugar/');
+
       return new Promise((resolve, reject) => {
 
         mala.subscribe(snapshot => {
@@ -196,7 +198,8 @@ export class PerfilPage {
           alugada: false,
           ofertada: false
         });
-        // console.log("ID", id);
+        console.log("ID", id);
+        paraAlugar.remove(id);
         this.minhasOfertas.remove(id);
         this.updateBadgeMinhasOfertas();
       })
@@ -249,6 +252,7 @@ export class PerfilPage {
       console.log('ionViewDidLoad PerfilPage');
       // this.presentLoading();
       // console.log('nome', this.userProfile.getNome());
+
       this.updateBadgeMinhasMalas();
       this.updateBadgeMinhasOfertas();
 
