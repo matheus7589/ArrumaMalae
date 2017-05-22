@@ -50,6 +50,7 @@ export class ChatPage {
   }
 
   chatSend(va, vi){ // enviar mensagem
+    // console.log("data: ", Date.now());
     this.fire.database.list('/chats/' + this.id).push({
       uid: firebase.auth().currentUser.uid,
       url: this.assetCollection,

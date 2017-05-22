@@ -10,3 +10,54 @@ page-chat {
 }
 
 }
+
+.chatImage{
+    background: url(../assets/img/homeSlide.png);
+  }
+
+.chatText{
+  white-space: normal;
+  font-size: 1.1em !important;
+  padding: 8px;
+}
+
+.chat-text{
+  white-space: normal;
+  font-size: 1.3em;
+  color: black;
+}
+
+
+.texto{
+  background-color: gray;
+}
+
+
+.balao{
+  background: #BBDEFB;
+  padding: 10px;
+  position: relative;
+  border-radius: 20px 20px 20px 0px;
+}
+
+.mensagemChat{
+  background-color: white;
+  border-radius: 20px 20px 20px 20px;
+}
+
+
+.botaoB{
+  margin-bottom: -5px !important;
+}
+
+ion-row{
+  padding-bottom: 2px;
+}
+
+.mensagemChatMensagem{
+  margin-bottom: 2px;
+}
+
+.rodape{
+  background-color: #CFD8DC;
+}

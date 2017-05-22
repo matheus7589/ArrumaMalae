@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { PesquisarPage } from '../../pages/pesquisar/pesquisar';
-import { LoginPage } from '../../pages/login/login';
+import { PesquisarPage } from '../pesquisar/pesquisar';
+import { LoginPage } from '../login/login';
 import { AuthData } from '../../providers/auth-data';
-import { PerfilPage } from '../../pages/perfil/perfil';
-import { ConversasPage } from '../../pages/conversas/conversas';
-import { ChatPage } from '../../pages/chat/chat';
+import { PerfilPage } from '../perfil/perfil';
+import { ConversasPage } from '../conversas/conversas';
+import { ChatPage } from '../chat/chat';
 
 /*
   Generated class for the Menu page.
@@ -28,7 +28,6 @@ export class MenuPage {
   constructor(public nav: NavController, public navParams: NavParams, public authData: AuthData) {
 
     this.pesquisarPage = PesquisarPage;
-    this.rootPage = this.pesquisarPage;
     this.perfilPage = PerfilPage;
     this.conversasPage = ConversasPage;
     this.chatPage = ChatPage;
@@ -40,6 +39,7 @@ export class MenuPage {
   }
 
   ionViewDidLoad() {
+    this.rootPage = PesquisarPage;
     console.log('ionViewDidLoad MenuPage');
   }
 

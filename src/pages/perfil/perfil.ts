@@ -3,8 +3,8 @@ import { NavController, Platform, ActionSheetController, LoadingController, Aler
 import { AuthData } from '../../providers/auth-data';
 import { UserData } from '../../providers/user-data';
 // import { LoginPage } from '../../pages/login/login';
-import { NovaMalaPage } from '../../pages/nova-mala/nova-mala';
-import { AtualizaMalaPage } from '../../pages/atualiza-mala/atualiza-mala';
+import { NovaMalaPage } from '../nova-mala/nova-mala';
+import { AtualizaMalaPage } from '../atualiza-mala/atualiza-mala';
 import { NovaMala } from '../../providers/nova-mala';
 import { FotoData } from '../../providers/foto-data';
 import { Usuario } from '../../providers/usuario';

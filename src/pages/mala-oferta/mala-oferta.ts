@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
-import { ChatPage } from '../../pages/chat/chat';
+import { ChatPage } from '../chat/chat';
 import { UserData } from '../../providers/user-data';
 import { FotoData } from '../../providers/foto-data';
 import { AngularFire } from 'angularfire2';
