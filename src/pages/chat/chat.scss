@@ -8,6 +8,10 @@ page-chat {
   font-size: 10px;
   color: rgb(205,205,205);
 }
+.ion-label{
+  font-size: inherit;
+  white-space: normal;
+}
 
 }
 
@@ -103,6 +107,7 @@ page-chat {
   width: 100%;
 }
 p {
+  display: inherit;
   font-size: 16px;
 }
 .bubble{
@@ -130,15 +135,23 @@ p {
 }
 .me {
   display: inherit;
-  margin: 5px 45px 5px 20px;
+  margin: 5px 45px 5px 75px;
 }
 .me::before {
   box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
   left: -9px;
 }
+.mefoto{
+  float: left;
+  margin: 10px;
+}
 .you {
   display: inherit;
-  margin: 5px 20px 5px 45px;
+  margin: 5px 75px 5px 45px;
+}
+.youfoto{
+  float: right;
+  margin: 10px;
 }
 .you::before {
   box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );

@@ -14,9 +14,9 @@
 <ion-content no-padding>
   <ion-list #scrollMe>
     <ion-item *ngFor="let item of firelist | async">
-      <!-- <ion-avatar >
+      <ion-avatar [class.youfoto]="isYou(item?.email)" [class.mefoto]="isMe(item?.email)">
         <img [src]="item?.url">
-      </ion-avatar> -->
+      </ion-avatar>
       <!-- <h2 class="chat-username">
       </h2>
       <div class="balao" >
@@ -24,7 +24,7 @@
       </div>
       <h1 style="font-size: 1em; color: gray; font-style: italic; float: left;">{{item?.nome}}. {{item?.timestamp | date:'dd/MM/yyyy'}}</h1> -->
       <div class="bubble" [class.you]="isYou(item?.email)" [class.me]="isMe(item?.email)">
-            <p>{{ item?.chat_text }}</p>
+            <div style="margin-bottom: 5px" class="ion-label">{{ item?.chat_text }}</div>
             <div class="author">
               {{ item?.nome }} | {{ item?.timestamp | date:"dd/MM/yy - hh:mm a" }}
             </div>
@@ -38,7 +38,7 @@
     <ion-grid>
       <ion-row>
         <ion-col width-80>
-          <ion-input [(ngModel)]="chat" class="message-text" name="chatText" required placeholder="menssagem..."></ion-input>
+          <ion-input [(ngModel)]="chat" class="message-text" name="chatText" required placeholder="mensagem..."></ion-input>
         </ion-col>
         <ion-col width-20 center>
           <button ion-button round (click)="chatSend(f.value, f.valid)" full [disabled]="f.valid === false">

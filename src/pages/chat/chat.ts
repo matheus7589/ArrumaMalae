@@ -35,11 +35,7 @@ export class ChatPage implements OnInit, AfterViewChecked {
 
     this.id = navParams.get('id');
 
-    this.firelist = this.fire.database.list('/chats/' + this.id, {
-      query: {
-        orderByChild: 'timestamp', // ordem dos dados mais recentes
-      }
-    });
+    this.firelist = this.fire.database.list('/chats/' + this.id);
 
     this.userData.getPerfil().then((data) => { // Carrega dados do usuário
       var userAux: any = data;
@@ -71,8 +67,8 @@ export class ChatPage implements OnInit, AfterViewChecked {
   }
 
   chatSend(va, vi){ // enviar mensagem
-    var time: any = firebase.database.ServerValue.TIMESTAMP;
-    console.log("data: ", time);
+    // var time: any = firebase.database.ServerValue.TIMESTAMP;
+    // console.log("data: ", time);
     this.fire.database.list('/chats/' + this.id).push({
       uid: firebase.auth().currentUser.uid,
       url: this.assetCollection,
