@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { FotoData } from '../../providers/foto-data';
@@ -17,15 +17,21 @@ import firebase from 'firebase';
   selector: 'page-chat',
   templateUrl: 'chat.html'
 })
-export class ChatPage {
+export class ChatPage implements OnInit, AfterViewChecked {
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+
   assetCollection;
   userNome: any;
   userSobrenome: any;
+  userEmail: any;
   firelist: FirebaseListObservable<any>;
   chat: any;
   public id;
+  user;
 
   constructor(public fire: AngularFire, public nav: NavController, public navParams: NavParams, public userData: UserData, public fotoData: FotoData) {
+
+    this.user = firebase.auth().currentUser;
 
     this.id = navParams.get('id');
 
@@ -39,7 +45,8 @@ export class ChatPage {
       var userAux: any = data;
       this.userNome = userAux.getNome();
       this.userSobrenome = userAux.getSobreNome();
-      // console.log('Nome', this.userNome);
+      this.userEmail = userAux.getEmail();
+      // console.log('Nome', userAux.getEmail());
     });
 
     this.fotoData.carregaFoto().then((data) =>{ // Carrega foto do usuario
@@ -47,19 +54,49 @@ export class ChatPage {
       // console.log("URL: ", this.assetCollection);
     });
 
+    // console.log("email: ",  this.user.email);
+
+  }
+
+  ngOnInit() {}
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { console.log('Scroll to bottom failed yo!') }
   }
 
   chatSend(va, vi){ // enviar mensagem
-    // console.log("data: ", Date.now());
+    var time: any = firebase.database.ServerValue.TIMESTAMP;
+    console.log("data: ", time);
     this.fire.database.list('/chats/' + this.id).push({
       uid: firebase.auth().currentUser.uid,
       url: this.assetCollection,
       nome: this.userNome,
+      email: this.userEmail,
       chat_text: va.chatText,
       timestamp: Date.now(),
       negativetimestamp: -Date.now() //para mais tarde fazer o download dos dados mais recentes
     })
     this.chat = '';
+  }
+
+  isYou(email) {
+    if(email == this.userEmail)
+      return false;
+    else
+      return true;
+  }
+
+  isMe(email) {
+    if(email == this.userEmail)
+      return true;
+    else
+      return false;
   }
 
   ionViewDidLoad() {

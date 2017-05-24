@@ -25,7 +25,7 @@ export class ConversasPage {
   }
 
   abreConversa(id){
-    console.log('ID:  ', id);
+    // console.log('ID:  ', id);
     this.nav.push(ChatPage, {
       id: id
     });
